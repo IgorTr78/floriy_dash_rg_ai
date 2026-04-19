@@ -17,7 +17,6 @@
   --oz-shadow:0 2px 8px rgba(0,0,0,.08);--oz-shadow-hover:0 4px 16px rgba(0,91,255,.15);
 }
 html,body{height:100%;font-family:'Inter',sans-serif;background:var(--oz-bg);color:var(--oz-text);font-size:14px}
-
 .oz-header{background:var(--oz-white);border-bottom:1px solid var(--oz-border);padding:0 20px;display:flex;align-items:center;gap:16px;height:56px;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .oz-logo{display:flex;align-items:center;gap:6px;text-decoration:none;flex-shrink:0}
 .oz-logo-box{width:36px;height:36px;background:var(--oz-blue);border-radius:8px;display:flex;align-items:center;justify-content:center}
@@ -33,11 +32,9 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--oz-bg);col
 .oz-badge-btn.primary{background:var(--oz-blue);border-color:var(--oz-blue);color:#fff}
 .oz-badge-btn.primary:hover{background:var(--oz-blue-hover)}
 .oz-cnt{background:var(--oz-orange);color:#fff;border-radius:99px;font-size:10px;font-weight:700;padding:0 5px;height:16px;display:inline-flex;align-items:center;min-width:16px;justify-content:center}
-
 .oz-layout{display:flex;min-height:calc(100vh - 56px)}
 .oz-sidebar{width:224px;background:var(--oz-white);border-right:1px solid var(--oz-border);padding:16px 0;flex-shrink:0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto}
 .oz-main{flex:1;padding:20px;overflow:auto}
-
 .oz-nav-label{font-size:11px;font-weight:600;color:var(--oz-text-3);text-transform:uppercase;letter-spacing:.6px;padding:10px 16px 4px}
 .oz-nav-item{display:flex;align-items:center;gap:8px;padding:8px 16px;font-size:13px;color:var(--oz-text-2);cursor:pointer;transition:all .12s;border-left:3px solid transparent;user-select:none}
 .oz-nav-item:hover{background:#F0F4FF;color:var(--oz-blue)}
@@ -46,7 +43,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--oz-bg);col
 .oz-nav-divider{height:1px;background:var(--oz-border);margin:8px 16px}
 .oz-nav-link{display:flex;align-items:center;gap:7px;padding:7px 16px;font-size:12px;color:var(--oz-blue);text-decoration:none;transition:all .12s;border-left:3px solid transparent}
 .oz-nav-link:hover{background:var(--oz-blue-light);border-left-color:var(--oz-blue)}
-
 .oz-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}
 .oz-metric{background:var(--oz-white);border-radius:var(--oz-radius);padding:16px;box-shadow:var(--oz-shadow);transition:box-shadow .15s}
 .oz-metric:hover{box-shadow:var(--oz-shadow-hover)}
@@ -56,14 +52,12 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--oz-bg);col
 .oz-metric-chip{display:inline-flex;align-items:center;gap:3px;font-size:11px;padding:2px 7px;border-radius:99px;font-weight:600;margin-top:5px}
 .chip-green{background:#E8F5E9;color:#2E7D32}
 .chip-amber{background:#FFF8E1;color:#F57C00}
-
 .oz-toolbar{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
 .oz-toolbar-left{display:flex;align-items:center;gap:6px;flex:1}
 .oz-section-title{font-size:13px;font-weight:700;color:var(--oz-text)}
 .oz-count-badge{background:var(--oz-blue-light);color:var(--oz-blue);font-size:11px;font-weight:600;padding:2px 7px;border-radius:99px}
 .oz-select{padding:6px 10px;border-radius:6px;border:1.5px solid var(--oz-border);font-size:12px;font-family:'Inter',sans-serif;color:var(--oz-text-2);background:var(--oz-white);cursor:pointer;outline:none;transition:border-color .12s}
 .oz-select:focus{border-color:var(--oz-blue)}
-
 .oz-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:20px}
 .oz-card{background:var(--oz-white);border-radius:var(--oz-radius);box-shadow:var(--oz-shadow);overflow:hidden;transition:box-shadow .2s,transform .2s;display:flex;flex-direction:column}
 .oz-card:hover{box-shadow:var(--oz-shadow-hover);transform:translateY(-2px)}
@@ -88,7 +82,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--oz-bg);col
 .rb-proto{background:var(--oz-blue-light);color:var(--oz-blue)}
 .oz-edit-btn{padding:4px 10px;border-radius:5px;border:1.5px solid var(--oz-border);background:transparent;font-size:11px;font-weight:500;color:var(--oz-text-2);cursor:pointer;font-family:'Inter',sans-serif;transition:all .12s;flex-shrink:0}
 .oz-edit-btn:hover{border-color:var(--oz-blue);color:var(--oz-blue)}
-
 .oz-editor{background:var(--oz-white);border-radius:var(--oz-radius);box-shadow:var(--oz-shadow);padding:20px;margin-bottom:16px;border-top:3px solid var(--oz-blue);animation:slideDown .2s ease}
 @keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
 .oz-editor h3{font-size:14px;font-weight:700;margin-bottom:16px;color:var(--oz-blue)}
@@ -106,7 +99,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--oz-bg);col
 .btn-cancel-e:hover{border-color:var(--oz-text-2)}
 .btn-del{padding:7px 14px;background:transparent;color:#D32F2F;border:1.5px solid #FFCDD2;border-radius:6px;font-size:13px;font-family:'Inter',sans-serif;cursor:pointer;margin-left:auto;transition:all .12s}
 .btn-del:hover{background:#FFEBEE}
-
 .oz-section-card{background:var(--oz-white);border-radius:var(--oz-radius);box-shadow:var(--oz-shadow);overflow:hidden;margin-bottom:16px}
 .oz-section-head{padding:12px 16px;font-size:13px;font-weight:600;border-bottom:1px solid var(--oz-border);display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;transition:background .12s}
 .oz-section-head:hover{background:#FAFAFA}
@@ -121,7 +113,6 @@ table.oz-table tr:hover td{background:#F5F8FF}
 .cell-yes{color:#2E7D32;font-weight:700;font-size:14px}
 .cell-maybe{color:#E65100;font-weight:600}
 .cell-no{color:#CCC}
-
 .oz-rules-body{padding:16px}
 .oz-rules-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .oz-rule-block{border:1px solid var(--oz-border);border-radius:var(--oz-radius-sm);padding:12px;transition:box-shadow .15s}
@@ -133,25 +124,21 @@ table.oz-table tr:hover td{background:#F5F8FF}
 .rn{min-width:18px;height:18px;background:var(--oz-blue);color:#fff;border-radius:50%;font-size:9px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
 .rnarr{min-width:18px;height:18px;background:var(--oz-blue-light);color:var(--oz-blue);border-radius:50%;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
 .rnred{min-width:18px;height:18px;background:#FFEBEE;color:#D32F2F;border-radius:50%;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
-
 .oz-conclusions{display:flex;flex-direction:column;gap:8px;padding:16px}
 .oz-concl{display:flex;gap:12px;padding:12px;background:#FAFEFF;border:1px solid #E3F0FF;border-radius:var(--oz-radius-sm);transition:box-shadow .15s,border-color .15s}
 .oz-concl:hover{box-shadow:var(--oz-shadow-hover);border-color:#B3D4FF}
 .oz-concl-ic{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
 .oz-concl-body strong{display:block;font-size:13px;font-weight:600;color:var(--oz-text);margin-bottom:3px}
 .oz-concl-body p{font-size:12px;color:var(--oz-text-2);line-height:1.6}
-
 .chevron{font-size:11px;color:var(--oz-text-3);transition:transform .2s}
 .chevron.open{transform:rotate(180deg)}
 .collapsible{overflow:hidden;transition:max-height .3s ease}
 .oz-empty{grid-column:1/-1;text-align:center;padding:48px 20px;color:var(--oz-text-3);font-size:13px;background:var(--oz-white);border-radius:var(--oz-radius);box-shadow:var(--oz-shadow)}
-
 @media(max-width:900px){.oz-sidebar{display:none}.oz-metrics{grid-template-columns:repeat(2,1fr)}.oz-grid{grid-template-columns:1fr}.oz-rules-grid{grid-template-columns:1fr}.oz-editor-grid{grid-template-columns:1fr}.oz-field.span2{grid-column:1}}
 @media(max-width:600px){.oz-metrics{grid-template-columns:1fr 1fr}.oz-header-title{display:none}}
 </style>
 </head>
 <body>
-
 <div class="oz-header">
   <div class="oz-logo">
     <div class="oz-logo-box">
@@ -175,7 +162,7 @@ table.oz-table tr:hover td{background:#F5F8FF}
   <div class="oz-header-actions">
     <button class="oz-badge-btn">
       <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1L8 4.8H12L9 7L10 11L6.5 9L3 11L4 7L1 4.8H5L6.5 1Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" fill="none"/></svg>
-      Промты <span class="oz-cnt" id="totalCnt">10</span>
+      Промты <span class="oz-cnt" id="totalCnt">12</span>
     </button>
     <button class="oz-badge-btn primary" onclick="openAdd()">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -222,15 +209,20 @@ table.oz-table tr:hover td{background:#F5F8FF}
     <div class="oz-toolbar">
       <div class="oz-toolbar-left">
         <span class="oz-section-title">Кейсы</span>
-        <span class="oz-count-badge" id="caseCnt">10</span>
+        <span class="oz-count-badge" id="caseCnt">12</span>
       </div>
       <select class="oz-select" id="f-tool" onchange="render()">
         <option value="">Все инструменты</option>
         <option value="Claude">Claude</option>
         <option value="GPT">GPT</option>
+        <option value="GPT 5.4">GPT 5.4</option>
         <option value="DeepSeek">DeepSeek</option>
+        <option value="DeepSeek (рабочий)">DeepSeek (рабочий)</option>
         <option value="Perplexity">Perplexity</option>
         <option value="Gemini">Gemini</option>
+        <option value="OpenAI">OpenAI</option>
+        <option value="Xmind">Xmind</option>
+        <option value="Markmap">Markmap</option>
       </select>
     </div>
     <div class="oz-grid" id="cards"></div>
@@ -313,50 +305,70 @@ const RM={
 };
 
 let cases=[
-  {id:1,title:'Правка БТ по нормативке',type:'БТ',tools:['Claude','GPT'],result:'ready',
-   algo:'Роль + текст 590-П + AS IS → промт 1: список BR → промт 2: структурировать по плану',
-   notes:'Вставлять текст напрямую, запрещать домысливание, просить цитировать пункты',
-   iters:2,winner:false,links:[]},
-  {id:2,title:'БТ нового отчёта по образцу',type:'БТ',tools:['Claude'],result:'draft',
-   algo:'Шаблон БТ + образцы отчётов РСБУ/МСФО → требования для новых счетов',
-   notes:'Алгоритмы расчёта полей требуют ручной проверки после генерации',
-   iters:1,winner:false,links:[]},
-  {id:3,title:'БТ по BPMN схеме',type:'BPMN',tools:['Claude'],result:'draft',
-   algo:'Загрузить .bpmn файл → запросить описание требований',
-   notes:'Claude читает .bpmn; DeepSeek по фото — завис, ничего не выдал',
-   iters:2,winner:false,links:[]},
-  {id:4,title:'BPMN XML по БТ',type:'BPMN',tools:['Claude','GPT','DeepSeek','Perplexity'],result:'draft',
-   algo:'Полные БТ + тех. требования → BPMN 2.0 XML (Camunda-совместимый, DI, пулы)',
-   notes:'Claude — лучший результат; нужно 2–3 итерации уточнений',
-   iters:3,winner:false,links:[]},
-  {id:5,title:'Mindmap / Brainstorm по теме',type:'Исследование',tools:['Claude','GPT','DeepSeek'],result:'ready',
-   algo:'Ключевые слова → mindmap markdown → Xmind / markmap.js',
-   notes:'DeepSeek хорошо генерит markdown; Claude — для большей глубины',
-   iters:1,winner:false,
-   links:[{label:'Xmind ↗',url:'https://app.xmind.com/q6jCdgjY'},{label:'Markmap REPL ↗',url:'https://markmap.js.org/repl'}]},
-  {id:6,title:'Тест-кейсы по БТ',type:'QA',tools:['Claude'],result:'ready',
-   algo:'Роль QA + БТ + шаблон тест-кейсов → таблица с граничными сценариями',
-   notes:'Давать шаблон формата; затем запросить непокрытые правила из БТ',
-   iters:2,winner:false,links:[]},
-  {id:7,title:'БА-ассистент (прототип)',type:'Инструмент',tools:['GPT','Perplexity'],result:'proto',
+  {id:1,title:'Правка БТ по нормативке',type:'БТ',
+   tools:['DeepSeek (рабочий)'],result:'draft',iters:3,winner:false,links:[],
+   algo:'Роль БА + текст изменений из 590-П + БТ AS IS → промт 1: список BR → промт 2: структурировать по моему плану',
+   notes:'Вставлять текст напрямую, запрещать домысливание, просить цитировать пункты'},
+
+  {id:2,title:'БТ нового отчёта по образцу',type:'БТ',
+   tools:['Claude'],result:'draft',iters:1,winner:false,links:[],
+   algo:'Шаблон БТ + образцы отчётов РСБУ/МСФО → изменённые требования для нового отчёта',
+   notes:'Алгоритмы расчёта полей требуют ручной проверки после генерации; по тексту нужны корректировки'},
+
+  {id:3,title:'БТ по BPMN схеме',type:'BPMN',
+   tools:['Claude'],result:'draft',iters:2,winner:false,links:[],
+   algo:'Загрузить .bpmn файл → запросить подробное описание требований для роли БА',
+   notes:'Claude читает .bpmn, дал свой очень детальный шаблон бизнес-требований, требуется правка. DeepSeek по фото — завис, ничего не выдал'},
+
+  {id:4,title:'BPMN XML по БТ',type:'BPMN',
+   tools:['Claude','GPT','DeepSeek','Perplexity'],result:'draft',iters:1,winner:false,links:[],
+   algo:'Полные БТ + тех. требования → детальный промт для генерации BPMN 2.0 XML (конкретизировать совместимость с Camunda Modeler или BPMN Modeler Enterprise, правила для пулов). Проверки: непрерывность sequence flow; подписи исходящих потоков после gateway; наличие default flow у всех exclusive gateway; корректность event-based gateway; корректность message flow; корректность BPMN DI',
+   notes:'Claude — лучший результат, самая полная схема, требует немного корректировок'},
+
+  {id:5,title:'Mindmap / Brainstorm по теме',type:'Исследование',
+   tools:['Claude','GPT','DeepSeek','Xmind','Markmap'],result:'draft',iters:1,winner:false,
+   links:[{label:'Xmind ↗',url:'https://app.xmind.com/q6jCdgjY'},{label:'Markmap REPL ↗',url:'https://markmap.js.org/repl'}],
+   algo:'Ключевые слова по исследуемой теме в любом ИИ → mindmap markdown → загрузить сгенерированный markdown в сервис Xmind / markmap.js → на встрече с Заказчиком использовать как основу для обсуждения верхнеуровневых требований, вносить правки в текст',
+   notes:'Запрос: «Сгенери mindmap в формате markdown». Claude, DeepSeek (рабочий) хорошо генерит описание в формате markdown'},
+
+  {id:6,title:'Тест-кейсы по БТ',type:'QA',
+   tools:['DeepSeek'],result:'draft',iters:2,winner:false,links:[],
+   algo:'Роль QA/БА + БТ + шаблон своих тест-кейсов → таблица с сценариями → докрутить дополнительными вопросами',
+   notes:'Давать шаблон формата; затем запросить непокрытые правила из БТ'},
+
+  {id:7,title:'БА-ассистент (прототип)',type:'Инструмент',
+   tools:['GPT','Perplexity','OpenAI'],result:'proto',iters:0,winner:false,
+   links:[{label:'Открыть прототип ↗',url:'https://ba-assistant-production.up.railway.app/'}],
    algo:'OpenAI + Perplexity + bpmn.io + SQL → задеплоен на Railway',
-   notes:'БТ из чата, BPMN онлайн, загрузка docs/pdf/bpmn, история проектов, совместная работа',
-   iters:0,winner:false,
-   links:[{label:'Открыть прототип ↗',url:'https://ba-assistant-production.up.railway.app/'}]},
-  {id:8,title:'Аналитика данных ГИС ГМП',type:'Данные',tools:['Claude','GPT'],result:'ready',
-   algo:'Сырой JSON → итерация 1: взыскатели → итерация 2: по УИН → итерация 3: инкассо',
-   notes:'Начинать с общего вопроса, уточнять формат, финал — сводная таблица',
-   iters:3,winner:false,links:[]},
-  {id:9,title:'«Рыба» БТ по XSD + PDF норматив + маппинг БД',type:'БТ',tools:['Claude','GPT','Perplexity','Gemini'],result:'ready',
-   algo:'Промт с ролью БА + PDF норматива ЦБ + XSD-схема + перечень полей БД → полная «рыба» БТ: глоссарий, User Story, Use Case, маппинг XSD, UAT тест-кейсы, юридические риски (17 разделов)',
-   notes:'Claude 🥇 49/50 — определил тип изменения (доработка vs. новая), полный маппинг XSD. Perplexity 🥈 45/50, GPT 🥉 39/50, Gemini ❌ 16/50. Чем больше МД сервисов — тем выше качество маппинга (~90% автоматически).',
-   iters:1,winner:true,links:[]},
-  {id:10,title:'Сбор открытых вопросов {УТОЧНИТЬ} из БТ',type:'БТ',tools:['Claude','GPT','DeepSeek'],result:'ready',
+   notes:'Формирует БТ из чата, строит редактируемые BPMN онлайн, загрузка и чтение docs/pdf/bpmn, csv, xlsx, история проектов, совместная работа нескольких БА под своей ролью, ищет best practice. Также обратный процесс, на основе схемы — формирует БТ и прочую документацию'},
+
+  {id:8,title:'Аналитика данных ГИС ГМП',type:'Данные',
+   tools:['DeepSeek (рабочий)'],result:'ready',iters:3,winner:false,links:[],
+   algo:'Загрузить сырой JSON → промт «анализ сообщения из ГИС ГМП» → итерация 1: «Сколько взыскателей и какие», задать в формате таблицы → итерация 2: группировка полученных данных по УИН с детализацией (с указанием статуса, основанием, датой выставления и суммой остатка платежа), формат — таблица → итерация 3: таблица выставленных инкассо (данные: Получатель, УИН, дату, сумму, статус и основание)',
+   notes:'Начинать с общего вопроса, уточнять формат, уточнять детализацию группировок и необходимых данных'},
+
+  {id:9,title:'«Рыба» БТ по XSD + PDF норматив + маппинг БД',type:'БТ',
+   tools:['Claude','GPT 5.4','Perplexity','Gemini'],result:'ready',iters:1,winner:true,links:[],
+   algo:'Промт с ролью БА + PDF нормативка ЦБ + XSD-схема + перечень полей БД → задана структура шаблона БТ: глоссарий, User Story, Use Case, маппинг XSD, UAT тест-кейсы, юридические риски (17 разделов) + правила заполнения → задан список нормативки для анализа',
+   notes:'Claude 🥇 49/50 — единственный кто определил тип изменения (доработка vs новая), полный маппинг XSD. Perplexity 🥈 45/50: уступает в глубине маппинга XSD и отсутствии явных флажков [ПРОТИВОРЕЧИЕ], но выигрывает по конкретности тест-кейсов (точные значения паттернов из XSD) и охвату User Story (8 штук — максимум). GPT 🥉 39/50: модель написала, что маппинг XSD сделан как «укрупнённый черновик» и предложила вынести полный реестр в Excel. Лучший результат по флажкам противоречий PDF vs XSD. Gemini ❌ 16/50: документ не пригоден для работы. Глоссарий из 5 терминов, один Use Case, 4% охвата XSD-схемы и фактическая ошибка: ReasonCodeInd интерпретирован как «коды ошибок приёма файла» вместо «кодов причин отсутствия TIN». Итог: на 90% заполнит маппинг XML на атрибуты; подсвечивает то, о чём не задумывался — юридических рисков, матрицы трассировки требований, требований к архивированию; отличные полные тест-кейсы'},
+
+  {id:10,title:'Сбор открытых вопросов {УТОЧНИТЬ} из БТ',type:'БТ',
+   tools:['Claude','GPT','DeepSeek'],result:'ready',iters:1,winner:false,links:[],
    algo:'Загрузить текст БТ с метками {УТОЧНИТЬ} → промт: «Найди все места с меткой {УТОЧНИТЬ} и выведи нумерованным списком» → готовый список открытых вопросов',
-   notes:'Результат — список вопросов для обсуждения с заказчиком. Работает в любом ИИ-сервисе без настройки. Экономия: 15–30 мин на ручной поиск по длинному документу.',
-   iters:1,winner:false,links:[]},
+   notes:'Результат — список вопросов для обсуждения с заказчиком. Работает в любом ИИ-сервисе без настройки. Экономия: 15–30 мин на ручной поиск по длинному документу'},
+
+  {id:11,title:'Шпаргалка по всей отчётности, регламентированной Форматом',type:'Исследование',
+   tools:['DeepSeek (рабочий)'],result:'ready',iters:1,winner:false,links:[],
+   algo:'Загрузка документа ПФР "Форматы" + промт: собрать информацию по отчётам',
+   notes:'Структурированный ответ сгруппированный по видам отчётности в формате таблицы: № Наименование отчёта / документа; Кто формирует?; Краткое описание; Код документа в XML. Подсвечены особо важные отчёты, которые банку требуется автоматизировать'},
+
+  {id:12,title:'Создать xml-документ на основании документа Форматы с кодом SPIS/BRAS',type:'Данные',
+   tools:['DeepSeek (рабочий)'],result:'ready',iters:1,winner:false,links:[],
+   algo:'Промт «создать xml-документ на основании документа Форматы с кодом SPIS» → промт «описать значение каждого поля xml, которое указано выше» → проверка промт «какие поля остались не заполненными по данному документу и по какой причине»',
+   notes:'Результат: полностью заполненный xml-документ с описанием полей и указанием незаполненных полей с причиной'},
 ];
-let nextId=11,editId=null,filterType='',filterResult='';
+
+let nextId=13,editId=null,filterType='',filterResult='';
 
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function setType(t){filterType=t;document.querySelectorAll('[id^="nav-"]').forEach(e=>e.classList.remove('active'));document.getElementById('nav-'+(t||'all')).classList.add('active');render();}
@@ -365,21 +377,27 @@ function setResult(r){filterResult=r;document.querySelectorAll('[id^="res-"]').f
 function filtered(){
   const tl=document.getElementById('f-tool').value;
   const q=(document.getElementById('searchInput').value||'').toLowerCase().trim();
-  return cases.filter(c=>(!filterType||c.type===filterType)&&(!filterResult||c.result===filterResult)&&(!tl||c.tools.includes(tl))&&(!q||(c.title+c.algo+c.notes+c.type).toLowerCase().includes(q)));
+  return cases.filter(c=>
+    (!filterType||c.type===filterType)&&
+    (!filterResult||c.result===filterResult)&&
+    (!tl||c.tools.includes(tl))&&
+    (!q||(c.title+c.algo+c.notes+c.type).toLowerCase().includes(q))
+  );
 }
 
 function render(){
   const f=filtered();
   document.getElementById('totalCnt').textContent=cases.length;
   document.getElementById('caseCnt').textContent=f.length;
-  const ready=f.filter(c=>c.result==='ready').length,draft=f.filter(c=>c.result==='draft').length,ts=new Set(f.flatMap(c=>c.tools));
+  const ready=f.filter(c=>c.result==='ready').length,draft=f.filter(c=>c.result==='draft').length;
+  const ts=new Set(f.flatMap(c=>c.tools));
   document.getElementById('metrics').innerHTML=`
     <div class="oz-metric"><div class="oz-metric-label">Кейсов найдено</div><div class="oz-metric-val">${f.length}</div><div class="oz-metric-sub">из ${cases.length} в базе</div></div>
     <div class="oz-metric"><div class="oz-metric-label">Готово к применению</div><div class="oz-metric-val" style="color:#2E7D32">${ready}</div><span class="oz-metric-chip chip-green">без ручной правки</span></div>
     <div class="oz-metric"><div class="oz-metric-label">Черновик</div><div class="oz-metric-val" style="color:#E65100">${draft}</div><span class="oz-metric-chip chip-amber">нужна доработка</span></div>
-    <div class="oz-metric"><div class="oz-metric-label">Инструментов</div><div class="oz-metric-val">${ts.size}</div><div class="oz-metric-sub">${[...ts].join(' · ')}</div></div>`;
+    <div class="oz-metric"><div class="oz-metric-label">Инструментов</div><div class="oz-metric-val">${ts.size}</div><div class="oz-metric-sub">${[...ts].slice(0,4).join(' · ')}${ts.size>4?'…':''}</div></div>`;
 
-  if(!f.length){document.getElementById('cards').innerHTML='<div class="oz-empty">Ничего не найдено</div>';return;}
+  if(!f.length){document.getElementById('cards').innerHTML='<div class="oz-empty">Ничего не найдено по вашему запросу</div>';return;}
   document.getElementById('cards').innerHTML=f.map(c=>{
     const col=TCOLORS[c.type]||TCOLORS.Данные,rm=RM[c.result];
     const iters=c.iters>0?`${c.iters} ${c.iters===1?'итерация':c.iters<5?'итерации':'итераций'}`:'без итераций';
@@ -412,16 +430,22 @@ function render(){
   let th=`<tr><th>Тип задачи</th>${tools.map(t=>`<th>${t}</th>`).join('')}</tr>`;
   types.forEach(tp=>{
     const rel=cases.filter(c=>c.type===tp);
-    th+=`<tr><td>${tp}</td>${tools.map(t=>{const u=rel.filter(c=>c.tools.includes(t));if(!u.length)return'<td class="cell-no">—</td>';return`<td class="${u.some(c=>c.result==='ready')?'cell-yes':'cell-maybe'}">${u.some(c=>c.result==='ready')?'✓':'⚠'}</td>`;}).join('')}</tr>`;
+    th+=`<tr><td>${tp}</td>${tools.map(t=>{
+      const toolsFlat=rel.flatMap(c=>c.tools);
+      const hasVariant=t==='DeepSeek'?toolsFlat.some(x=>x==='DeepSeek'||x==='DeepSeek (рабочий)'):toolsFlat.includes(t);
+      if(!hasVariant)return'<td class="cell-no">—</td>';
+      const u=rel.filter(c=>c.tools.some(x=>t==='DeepSeek'?(x==='DeepSeek'||x==='DeepSeek (рабочий)'):x===t));
+      return`<td class="${u.some(c=>c.result==='ready')?'cell-yes':'cell-maybe'}">${u.some(c=>c.result==='ready')?'✓':'⚠'}</td>`;
+    }).join('')}</tr>`;
   });
   document.getElementById('matrix').innerHTML=th;
 
   document.getElementById('conclusions').innerHTML=[
-    {ic:'7',bg:'#E8F5E9',tx:'#2E7D32',t:'7 из 10 кейсов дают готовый результат',b:'БТ по нормативке, Mindmap, Тест-кейсы, Разбор XML, БА-ассистент, XSD-маппинг и сбор вопросов {УТОЧНИТЬ} — без существенной ручной правки.'},
-    {ic:'⚠',bg:'#FFF3E0',tx:'#E65100',t:'2 кейса дают рабочий черновик',b:'BPMN-задачи требуют 2–3 итерации, но экономят 60–70% времени на старт.'},
+    {ic:'5',bg:'#E8F5E9',tx:'#2E7D32',t:'5 из 12 кейсов дают готовый результат',b:'Разбор XML ГИС ГМП, XSD-маппинг, сбор вопросов {УТОЧНИТЬ}, Шпаргалка по Форматам и SPIS/BRAS xml — без существенной ручной правки.'},
+    {ic:'6',bg:'#FFF3E0',tx:'#E65100',t:'6 кейсов дают рабочий черновик',b:'БТ по нормативке, отчёты, BPMN-задачи, Mindmap, тест-кейсы требуют доработки, но экономят 60–70% времени на старт.'},
     {ic:'!',bg:'#FFE3E3',tx:'#C62828',t:'Нормативка — самый сложный тип данных',b:'ИИ теряет исключения, перекрёстные ссылки и числовые пороги. Без специальных правил промта результат ненадёжен.'},
     {ic:'C',bg:'#E3F0FF',tx:'#005BFF',t:'Claude — лидер для сложных форматов',b:'Победитель теста XSD-маппинга (49/50). Единственный, кто самостоятельно определяет тип изменения. Лучший для .bpmn и нормативных текстов.'},
-    {ic:'↻',bg:'#EDE9FD',tx:'#5B46D1',t:'Итерационный подход обязателен',b:'Один промт редко даёт финальный результат. Мини-описание → первый результат → уточняющие промты → итоговый промт для переиспользования.'},
+    {ic:'↻',bg:'#EDE9FD',tx:'#5B46D1',t:'Итерационный подход обязателен',b:'Мини-описание → первый результат → уточняющие промты → итоговый промт для переиспользования.'},
     {ic:'↗',bg:'#FCE4EC',tx:'#C62828',t:'Следующий шаг — библиотека промтов',b:'При добавлении МД сервисов ИИ заполняет маппинг XSD на ~90% автоматически. Шаблон промта по XSD готов к доработке на реальных задачах.'},
   ].map(c=>`<div class="oz-concl"><div class="oz-concl-ic" style="background:${c.bg};color:${c.tx}">${esc(c.ic)}</div><div class="oz-concl-body"><strong>${esc(c.t)}</strong><p>${esc(c.b)}</p></div></div>`).join('');
 }
@@ -442,7 +466,7 @@ function editorHTML(c){
       <div class="oz-field span2"><label>Правила / примечания</label><textarea id="e-notes">${esc(c?c.notes:'')}</textarea></div>
       <div class="oz-field"><label>Инструменты (через запятую)</label><input id="e-tools" value="${esc(c?c.tools.join(', '):'')}" placeholder="Claude, GPT"></div>
       <div class="oz-field"><label>Итераций</label><input id="e-iters" type="number" min="0" max="20" value="${c?c.iters:1}"></div>
-      <div class="oz-field span2"><label>Ссылки (Название::URL, по одной на строку)</label><textarea id="e-links" style="min-height:48px">${esc(linksVal)}</textarea></div>
+      <div class="oz-field span2"><label>Ссылки (Название::URL, по одной на строку)</label><textarea id="e-links" style="min-height:44px">${esc(linksVal)}</textarea></div>
     </div>
     <div class="oz-editor-actions">
       <button class="btn-save" onclick="${isEdit?'saveEdit()':'saveAdd()'}">Сохранить</button>

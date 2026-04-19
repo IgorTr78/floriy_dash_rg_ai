@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ИИ-ассистент · Рабочая группа · Ozon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --oz-blue:#005BFF;--oz-blue-hover:#0052E6;--oz-blue-light:#EBF0FF;
+  --oz-orange:#F91155;--oz-bg:#F5F5F5;--oz-white:#FFFFFF;
+  --oz-text:#1A1A1A;--oz-text-2:#666;--oz-text-3:#999;--oz-border:#E0E0E0;
+  --oz-radius:12px;--oz-radius-sm:8px;
+  --oz-shadow:0 2px 8px rgba(0,0,0,.08);--oz-shadow-hover:0 4px 16px rgba(0,91,255,.15);
+}
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--oz-bg);color:var(--oz-text);font-size:14px}
+
+.oz-header{background:var(--oz-white);border-bottom:1px solid var(--oz-border);padding:0 20px;display:flex;align-items:center;gap:16px;height:56px;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.oz-logo{display:flex;align-items:center;gap:6px;text-decoration:none;flex-shrink:0}
+.oz-logo-box{width:36px;height:36px;background:var(--oz-blue);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.oz-logo-text{font-size:17px;font-weight:700;color:var(--oz-blue);letter-spacing:-.5px}
+.oz-header-title{font-size:13px;font-weight:500;color:var(--oz-text-2);border-left:1px solid var(--oz-border);padding-left:16px;margin-left:4px;white-space:nowrap}
+.oz-search{flex:1;max-width:480px;position:relative;margin:0 8px}
+.oz-search input{width:100%;height:36px;border:1.5px solid var(--oz-border);border-radius:6px;padding:0 36px 0 12px;font-size:13px;font-family:'Inter',sans-serif;outline:none;background:var(--oz-bg);color:var(--oz-text);transition:border-color .15s,background .15s}
+.oz-search input:focus{border-color:var(--oz-blue);background:var(--oz-white)}
+.oz-search-icon{position:absolute;right:10px;top:50%;transform:translateY(-50%);pointer-events:none}
+.oz-header-actions{display:flex;align-items:center;gap:8px;margin-left:auto}
+.oz-badge-btn{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:6px;border:1.5px solid var(--oz-border);font-size:12px;font-weight:500;color:var(--oz-text-2);background:transparent;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;white-space:nowrap;text-decoration:none}
+.oz-badge-btn:hover{border-color:var(--oz-blue);color:var(--oz-blue)}
+.oz-badge-btn.primary{background:var(--oz-blue);border-color:var(--oz-blue);color:#fff}
+.oz-badge-btn.primary:hover{background:var(--oz-blue-hover)}
+.oz-cnt{background:var(--oz-orange);color:#fff;border-radius:99px;font-size:10px;font-weight:700;padding:0 5px;height:16px;display:inline-flex;align-items:center;min-width:16px;justify-content:center}
+
+.oz-layout{display:flex;min-height:calc(100vh - 56px)}
+.oz-sidebar{width:224px;background:var(--oz-white);border-right:1px solid var(--oz-border);padding:16px 0;flex-shrink:0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto}
+.oz-main{flex:1;padding:20px;overflow:auto}
+
+.oz-nav-label{font-size:11px;font-weight:600;color:var(--oz-text-3);text-transform:uppercase;letter-spacing:.6px;padding:10px 16px 4px}
+.oz-nav-item{display:flex;align-items:center;gap:8px;padding:8px 16px;font-size:13px;color:var(--oz-text-2);cursor:pointer;transition:all .12s;border-left:3px solid transparent;user-select:none}
+.oz-nav-item:hover{background:#F0F4FF;color:var(--oz-blue)}
+.oz-nav-item.active{background:var(--oz-blue-light);color:var(--oz-blue);font-weight:500;border-left-color:var(--oz-blue)}
+.oz-nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.oz-nav-divider{height:1px;background:var(--oz-border);margin:8px 16px}
+.oz-nav-link{display:flex;align-items:center;gap:7px;padding:7px 16px;font-size:12px;color:var(--oz-blue);text-decoration:none;transition:all .12s;border-left:3px solid transparent}
+.oz-nav-link:hover{background:var(--oz-blue-light);border-left-color:var(--oz-blue)}
+
+.oz-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}
+.oz-metric{background:var(--oz-white);border-radius:var(--oz-radius);padding:16px;box-shadow:var(--oz-shadow);transition:box-shadow .15s}
+.oz-metric:hover{box-shadow:var(--oz-shadow-hover)}
+.oz-metric-label{font-size:11px;color:var(--oz-text-3);margin-bottom:6px;font-weight:500;text-transform:uppercase;letter-spacing:.4px}
+.oz-metric-val{font-size:28px;font-weight:700;line-height:1;letter-spacing:-1px}
+.oz-metric-sub{font-size:11px;color:var(--oz-text-3);margin-top:5px}
+.oz-metric-chip{display:inline-flex;align-items:center;gap:3px;font-size:11px;padding:2px 7px;border-radius:99px;font-weight:600;margin-top:5px}
+.chip-green{background:#E8F5E9;color:#2E7D32}
+.chip-amber{background:#FFF8E1;color:#F57C00}
+
+.oz-toolbar{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.oz-toolbar-left{display:flex;align-items:center;gap:6px;flex:1}
+.oz-section-title{font-size:13px;font-weight:700;color:var(--oz-text)}
+.oz-count-badge{background:var(--oz-blue-light);color:var(--oz-blue);font-size:11px;font-weight:600;padding:2px 7px;border-radius:99px}
+.oz-select{padding:6px 10px;border-radius:6px;border:1.5px solid var(--oz-border);font-size:12px;font-family:'Inter',sans-serif;color:var(--oz-text-2);background:var(--oz-white);cursor:pointer;outline:none;transition:border-color .12s}
+.oz-select:focus{border-color:var(--oz-blue)}
+
+.oz-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:20px}
+.oz-card{background:var(--oz-white);border-radius:var(--oz-radius);box-shadow:var(--oz-shadow);overflow:hidden;transition:box-shadow .2s,transform .2s;display:flex;flex-direction:column}
+.oz-card:hover{box-shadow:var(--oz-shadow-hover);transform:translateY(-2px)}
+.oz-card-top{padding:14px 16px 12px;flex:1}
+.oz-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px}
+.oz-card-type{font-size:11px;font-weight:600;padding:3px 9px;border-radius:99px;flex-shrink:0;margin-top:2px;white-space:nowrap}
+.oz-card-title-row{display:flex;align-items:flex-start;gap:6px;flex-wrap:wrap;flex:1}
+.oz-card-title{font-size:13px;font-weight:600;line-height:1.35;color:var(--oz-text)}
+.oz-winner-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FFF8E1;color:#F57C00;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.oz-card-meta{font-size:11px;color:var(--oz-text-3);margin-bottom:8px}
+.oz-card-algo{font-size:12px;color:var(--oz-text-2);line-height:1.6;margin-bottom:8px}
+.oz-card-notes{font-size:11px;color:var(--oz-text-3);line-height:1.5;font-style:italic;border-left:2px solid var(--oz-border);padding-left:8px}
+.oz-card-links{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px}
+.oz-card-link{font-size:11px;color:var(--oz-blue);text-decoration:none;border:1px solid #B3D4FF;border-radius:4px;padding:2px 8px;background:#F0F6FF;font-weight:500;transition:all .12s}
+.oz-card-link:hover{background:#E3F0FF;border-color:var(--oz-blue)}
+.oz-card-bottom{padding:10px 16px;background:#FAFAFA;border-top:1px solid var(--oz-border);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.oz-tags{display:flex;gap:4px;flex-wrap:wrap}
+.oz-tag{font-size:11px;padding:2px 7px;border-radius:4px;background:var(--oz-bg);color:var(--oz-text-2);border:1px solid var(--oz-border);font-weight:500}
+.oz-result-badge{font-size:11px;font-weight:600;padding:3px 9px;border-radius:99px;white-space:nowrap}
+.rb-ready{background:#E8F5E9;color:#2E7D32}
+.rb-draft{background:#FFF3E0;color:#E65100}
+.rb-proto{background:var(--oz-blue-light);color:var(--oz-blue)}
+.oz-edit-btn{padding:4px 10px;border-radius:5px;border:1.5px solid var(--oz-border);background:transparent;font-size:11px;font-weight:500;color:var(--oz-text-2);cursor:pointer;font-family:'Inter',sans-serif;transition:all .12s;flex-shrink:0}
+.oz-edit-btn:hover{border-color:var(--oz-blue);color:var(--oz-blue)}
+
+.oz-editor{background:var(--oz-white);border-radius:var(--oz-radius);box-shadow:var(--oz-shadow);padding:20px;margin-bottom:16px;border-top:3px solid var(--oz-blue);animation:slideDown .2s ease}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.oz-editor h3{font-size:14px;font-weight:700;margin-bottom:16px;color:var(--oz-blue)}
+.oz-editor-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.oz-field{display:flex;flex-direction:column;gap:4px}
+.oz-field.span2{grid-column:1/-1}
+.oz-field label{font-size:11px;font-weight:600;color:var(--oz-text-3);text-transform:uppercase;letter-spacing:.4px}
+.oz-field input,.oz-field select,.oz-field textarea{padding:8px 10px;border-radius:var(--oz-radius-sm);border:1.5px solid var(--oz-border);font-size:13px;font-family:'Inter',sans-serif;color:var(--oz-text);background:var(--oz-bg);outline:none;transition:border-color .12s,background .12s}
+.oz-field input:focus,.oz-field select:focus,.oz-field textarea:focus{border-color:var(--oz-blue);background:var(--oz-white)}
+.oz-field textarea{resize:vertical;min-height:60px;line-height:1.5}
+.oz-editor-actions{display:flex;gap:8px;margin-top:14px;align-items:center}
+.btn-save{padding:7px 18px;background:var(--oz-blue);color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:background .12s}
+.btn-save:hover{background:var(--oz-blue-hover)}
+.btn-cancel-e{padding:7px 14px;background:transparent;color:var(--oz-text-2);border:1.5px solid var(--oz-border);border-radius:6px;font-size:13px;font-family:'Inter',sans-serif;cursor:pointer;transition:all .12s}
+.btn-cancel-e:hover{border-color:var(--oz-text-2)}
+.btn-del{padding:7px 14px;background:transparent;color:#D32F2F;border:1.5px solid #FFCDD2;border-radius:6px;font-size:13px;font-family:'Inter',sans-serif;cursor:pointer;margin-left:auto;transition:all .12s}
+.btn-del:hover{background:#FFEBEE}
+
+.oz-section-card{background:var(--oz-white);border-radius:var(--oz-radius);box-shadow:var(--oz-shadow);overflow:hidden;margin-bottom:16px}
+.oz-section-head{padding:12px 16px;font-size:13px;font-weight:600;border-bottom:1px solid var(--oz-border);display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;transition:background .12s}
+.oz-section-head:hover{background:#FAFAFA}
+.oz-section-head .sub{font-size:11px;font-weight:400;color:var(--oz-text-3);margin-left:6px}
+table.oz-table{width:100%;border-collapse:collapse;font-size:12px}
+table.oz-table th{padding:8px 12px;text-align:center;font-weight:600;font-size:11px;color:var(--oz-text-3);background:#FAFAFA;border-bottom:1px solid var(--oz-border);text-transform:uppercase;letter-spacing:.4px}
+table.oz-table th:first-child{text-align:left;width:32%}
+table.oz-table td{padding:9px 12px;text-align:center;border-bottom:1px solid var(--oz-border)}
+table.oz-table tr:last-child td{border-bottom:none}
+table.oz-table td:first-child{text-align:left;color:var(--oz-text-2);font-weight:500}
+table.oz-table tr:hover td{background:#F5F8FF}
+.cell-yes{color:#2E7D32;font-weight:700;font-size:14px}
+.cell-maybe{color:#E65100;font-weight:600}
+.cell-no{color:#CCC}
+
+.oz-rules-body{padding:16px}
+.oz-rules-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.oz-rule-block{border:1px solid var(--oz-border);border-radius:var(--oz-radius-sm);padding:12px;transition:box-shadow .15s}
+.oz-rule-block:hover{box-shadow:var(--oz-shadow-hover)}
+.oz-rule-block h4{font-size:12px;font-weight:700;color:var(--oz-blue);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.oz-rule-block h4::before{content:'';display:inline-block;width:3px;height:13px;background:var(--oz-blue);border-radius:2px;flex-shrink:0}
+.oz-rule-line{font-size:12px;color:var(--oz-text-2);line-height:1.6;padding:5px 0;border-bottom:1px solid #F5F5F5;display:flex;gap:8px;align-items:flex-start}
+.oz-rule-line:last-child{border-bottom:none;padding-bottom:0}
+.rn{min-width:18px;height:18px;background:var(--oz-blue);color:#fff;border-radius:50%;font-size:9px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.rnarr{min-width:18px;height:18px;background:var(--oz-blue-light);color:var(--oz-blue);border-radius:50%;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.rnred{min-width:18px;height:18px;background:#FFEBEE;color:#D32F2F;border-radius:50%;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+
+.oz-conclusions{display:flex;flex-direction:column;gap:8px;padding:16px}
+.oz-concl{display:flex;gap:12px;padding:12px;background:#FAFEFF;border:1px solid #E3F0FF;border-radius:var(--oz-radius-sm);transition:box-shadow .15s,border-color .15s}
+.oz-concl:hover{box-shadow:var(--oz-shadow-hover);border-color:#B3D4FF}
+.oz-concl-ic{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.oz-concl-body strong{display:block;font-size:13px;font-weight:600;color:var(--oz-text);margin-bottom:3px}
+.oz-concl-body p{font-size:12px;color:var(--oz-text-2);line-height:1.6}
+
+.chevron{font-size:11px;color:var(--oz-text-3);transition:transform .2s}
+.chevron.open{transform:rotate(180deg)}
+.collapsible{overflow:hidden;transition:max-height .3s ease}
+.oz-empty{grid-column:1/-1;text-align:center;padding:48px 20px;color:var(--oz-text-3);font-size:13px;background:var(--oz-white);border-radius:var(--oz-radius);box-shadow:var(--oz-shadow)}
+
+@media(max-width:900px){.oz-sidebar{display:none}.oz-metrics{grid-template-columns:repeat(2,1fr)}.oz-grid{grid-template-columns:1fr}.oz-rules-grid{grid-template-columns:1fr}.oz-editor-grid{grid-template-columns:1fr}.oz-field.span2{grid-column:1}}
+@media(max-width:600px){.oz-metrics{grid-template-columns:1fr 1fr}.oz-header-title{display:none}}
+</style>
+</head>
+<body>
+
+<div class="oz-header">
+  <div class="oz-logo">
+    <div class="oz-logo-box">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <rect x="3" y="3" width="6" height="6" rx="1.5" fill="white"/>
+        <rect x="11" y="3" width="6" height="6" rx="1.5" fill="white" opacity=".7"/>
+        <rect x="3" y="11" width="6" height="6" rx="1.5" fill="white" opacity=".7"/>
+        <rect x="11" y="11" width="6" height="6" rx="1.5" fill="white" opacity=".4"/>
+      </svg>
+    </div>
+    <span class="oz-logo-text">ozon</span>
+  </div>
+  <span class="oz-header-title">ИИ-ассистент · Рабочая группа</span>
+  <div class="oz-search">
+    <input type="text" placeholder="Поиск по кейсам..." id="searchInput" oninput="render()">
+    <svg class="oz-search-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <circle cx="6" cy="6" r="4.5" stroke="#999" stroke-width="1.5"/>
+      <path d="M9.5 9.5L12 12" stroke="#999" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="oz-header-actions">
+    <button class="oz-badge-btn">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1L8 4.8H12L9 7L10 11L6.5 9L3 11L4 7L1 4.8H5L6.5 1Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" fill="none"/></svg>
+      Промты <span class="oz-cnt" id="totalCnt">10</span>
+    </button>
+    <button class="oz-badge-btn primary" onclick="openAdd()">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Добавить кейс
+    </button>
+  </div>
+</div>
+
+<div class="oz-layout">
+  <div class="oz-sidebar">
+    <div class="oz-nav-label">Тип задачи</div>
+    <div class="oz-nav-item active" onclick="setType('')" id="nav-all"><span class="oz-nav-dot" style="background:#005BFF"></span>Все кейсы</div>
+    <div class="oz-nav-item" onclick="setType('БТ')" id="nav-БТ"><span class="oz-nav-dot" style="background:#378ADD"></span>Бизнес-требования</div>
+    <div class="oz-nav-item" onclick="setType('BPMN')" id="nav-BPMN"><span class="oz-nav-dot" style="background:#7F77DD"></span>BPMN</div>
+    <div class="oz-nav-item" onclick="setType('Исследование')" id="nav-Исследование"><span class="oz-nav-dot" style="background:#639922"></span>Исследование</div>
+    <div class="oz-nav-item" onclick="setType('QA')" id="nav-QA"><span class="oz-nav-dot" style="background:#BA7517"></span>QA / Тесты</div>
+    <div class="oz-nav-item" onclick="setType('Данные')" id="nav-Данные"><span class="oz-nav-dot" style="background:#888"></span>Данные</div>
+    <div class="oz-nav-item" onclick="setType('Инструмент')" id="nav-Инструмент"><span class="oz-nav-dot" style="background:#D4537E"></span>Инструменты</div>
+    <div class="oz-nav-divider"></div>
+    <div class="oz-nav-label">Результат</div>
+    <div class="oz-nav-item" onclick="setResult('')" id="res-all"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="#999"/></svg>&nbsp;Любой</div>
+    <div class="oz-nav-item" onclick="setResult('ready')" id="res-ready"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="#2E7D32"/></svg>&nbsp;Готово ✓</div>
+    <div class="oz-nav-item" onclick="setResult('draft')" id="res-draft"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="#E65100"/></svg>&nbsp;Черновик ⚠</div>
+    <div class="oz-nav-item" onclick="setResult('proto')" id="res-proto"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="#005BFF"/></svg>&nbsp;Прототип</div>
+    <div class="oz-nav-divider"></div>
+    <div class="oz-nav-label">Быстрые ссылки</div>
+    <a class="oz-nav-link" href="https://ba-assistant-production.up.railway.app/" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="4" height="4" rx="1" fill="#005BFF"/><rect x="7" y="1" width="4" height="4" rx="1" fill="#005BFF" opacity=".6"/><rect x="1" y="7" width="4" height="4" rx="1" fill="#005BFF" opacity=".6"/><rect x="7" y="7" width="4" height="4" rx="1" fill="#005BFF" opacity=".3"/></svg>
+      БА-ассистент ↗
+    </a>
+    <a class="oz-nav-link" href="https://app.xmind.com/q6jCdgjY" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="2" r="1.5" fill="#005BFF"/><circle cx="2" cy="9" r="1.5" fill="#005BFF" opacity=".6"/><circle cx="10" cy="9" r="1.5" fill="#005BFF" opacity=".6"/><path d="M6 3.5V7M6 7L2.5 8.5M6 7L9.5 8.5" stroke="#005BFF" stroke-width="1.2" stroke-linecap="round"/></svg>
+      Xmind — карта рисков ↗
+    </a>
+    <a class="oz-nav-link" href="https://markmap.js.org/repl" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="5" width="3" height="2" rx="1" fill="#005BFF" opacity=".4"/><rect x="5" y="2" width="3" height="2" rx="1" fill="#005BFF"/><rect x="5" y="8" width="3" height="2" rx="1" fill="#005BFF" opacity=".6"/><path d="M4 6H5M8 3L9 6M8 9L9 6M9 6H11" stroke="#005BFF" stroke-width="1" stroke-linecap="round"/></svg>
+      Markmap REPL ↗
+    </a>
+  </div>
+
+  <div class="oz-main">
+    <div class="oz-metrics" id="metrics"></div>
+    <div id="editor-slot"></div>
+    <div class="oz-toolbar">
+      <div class="oz-toolbar-left">
+        <span class="oz-section-title">Кейсы</span>
+        <span class="oz-count-badge" id="caseCnt">10</span>
+      </div>
+      <select class="oz-select" id="f-tool" onchange="render()">
+        <option value="">Все инструменты</option>
+        <option value="Claude">Claude</option>
+        <option value="GPT">GPT</option>
+        <option value="DeepSeek">DeepSeek</option>
+        <option value="Perplexity">Perplexity</option>
+        <option value="Gemini">Gemini</option>
+      </select>
+    </div>
+    <div class="oz-grid" id="cards"></div>
+
+    <div class="oz-section-card">
+      <div class="oz-section-head" onclick="toggleSection('matrix-wrap','m-chev')">
+        <span>Матрица эффективности <span class="sub">инструмент × тип задачи</span></span>
+        <span class="chevron open" id="m-chev">▼</span>
+      </div>
+      <div class="collapsible" id="matrix-wrap" style="max-height:1000px">
+        <table class="oz-table" id="matrix"></table>
+      </div>
+    </div>
+
+    <div class="oz-section-card">
+      <div class="oz-section-head" onclick="toggleSection('conclusions-wrap','c-chev')">
+        <span>Общие выводы рабочей группы</span>
+        <span class="chevron open" id="c-chev">▼</span>
+      </div>
+      <div class="collapsible" id="conclusions-wrap" style="max-height:2000px">
+        <div class="oz-conclusions" id="conclusions"></div>
+      </div>
+    </div>
+
+    <div class="oz-section-card">
+      <div class="oz-section-head" onclick="toggleSection('rules-wrap','r-chev')">
+        <span>Правила работы с ИИ</span>
+        <span class="chevron open" id="r-chev">▼</span>
+      </div>
+      <div class="collapsible" id="rules-wrap" style="max-height:3000px">
+        <div class="oz-rules-body">
+          <div class="oz-rules-grid">
+            <div class="oz-rule-block">
+              <h4>3 правила для нормативных документов</h4>
+              <div class="oz-rule-line"><span class="rn">1</span>Вставляй текст напрямую в промт — не давай название файла. ИИ видит только то, что внутри промта.</div>
+              <div class="oz-rule-line"><span class="rn">2</span>Запрети домысливание: «Если чего-то нет — пиши [УТОЧНИТЬ], не дополняй из своих знаний».</div>
+              <div class="oz-rule-line"><span class="rn">3</span>Проси цитировать конкретный пункт для каждого требования — сразу видно, где ИИ придумал.</div>
+            </div>
+            <div class="oz-rule-block">
+              <h4>Общие правила промта</h4>
+              <div class="oz-rule-line"><span class="rnarr">→</span>Назначать роль с контекстом предметной области</div>
+              <div class="oz-rule-line"><span class="rnarr">→</span>Докручивать несколькими итерациями и уточняющими вопросами</div>
+              <div class="oz-rule-line"><span class="rnarr">→</span>Запрашивать примеры, сохранять в нужном формате</div>
+              <div class="oz-rule-line"><span class="rnarr">→</span>В конце запросить итоговый промт — переиспользовать</div>
+              <div class="oz-rule-line"><span class="rnarr">→</span>Для глубокой проработки включать Deep Thinking</div>
+              <div class="oz-rule-line"><span class="rnarr">→</span>Чем больше контекста о системах и процессах — тем качественнее результат</div>
+            </div>
+            <div class="oz-rule-block">
+              <h4>Итерационные промты-помощники</h4>
+              <div class="oz-rule-line"><span class="rnarr">1</span><div><strong style="color:#005BFF;font-size:11px">Общее требование:</strong><br>«Перепиши по шаблону: КОГДА / СИСТЕМА БЕРЁТ / ПРИМЕНЯЕТ ПРАВИЛО / ЗАПИСЫВАЕТ»</div></div>
+              <div class="oz-rule-line"><span class="rnarr">2</span><div><strong style="color:#005BFF;font-size:11px">Лишнее:</strong><br>«Проверь каждую строку — есть основание? Нет → [УТОЧНИТЬ]»</div></div>
+              <div class="oz-rule-line"><span class="rnarr">3</span><div><strong style="color:#005BFF;font-size:11px">Исключения:</strong><br>«Найди оговорки ("за исключением", "при условии"). Добавь в колонку»</div></div>
+              <div class="oz-rule-line"><span class="rnarr">4</span><div><strong style="color:#005BFF;font-size:11px">Покрытие тестами:</strong><br>«Какие правила из БТ не проверяет ни один тест-кейс? Добавь недостающие»</div></div>
+            </div>
+            <div class="oz-rule-block">
+              <h4>Типичные ошибки ИИ с нормативкой</h4>
+              <div class="oz-rule-line"><span class="rnred">✕</span>Игнорирует перекрёстные ссылки между пунктами</div>
+              <div class="oz-rule-line"><span class="rnred">✕</span>Теряет «за исключением...» в конце пункта</div>
+              <div class="oz-rule-line"><span class="rnred">✕</span>Заменяет терминологию ЦБ «понятными» словами</div>
+              <div class="oz-rule-line"><span class="rnred">✕</span>Округляет или путает числовые пороги и диапазоны</div>
+              <div class="oz-rule-line"><span class="rnred">✕</span>Применяет устаревшую редакцию нормативного акта</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const TCOLORS={
+  БТ:{bg:'#E3F0FF',tx:'#005BFF'},BPMN:{bg:'#EDE9FD',tx:'#5B46D1'},
+  Исследование:{bg:'#E8F5E9',tx:'#2E7D32'},QA:{bg:'#FFF3E0',tx:'#E65100'},
+  Данные:{bg:'#F5F5F5',tx:'#555'},Инструмент:{bg:'#FCE4EC',tx:'#C62828'},
+};
+const RM={
+  ready:{label:'✓ Готово',cls:'rb-ready'},
+  draft:{label:'⚠ Черновик',cls:'rb-draft'},
+  proto:{label:'● Прототип',cls:'rb-proto'},
+};
+
+let cases=[
+  {id:1,title:'Правка БТ по нормативке',type:'БТ',tools:['Claude','GPT'],result:'ready',
+   algo:'Роль + текст 590-П + AS IS → промт 1: список BR → промт 2: структурировать по плану',
+   notes:'Вставлять текст напрямую, запрещать домысливание, просить цитировать пункты',
+   iters:2,winner:false,links:[]},
+  {id:2,title:'БТ нового отчёта по образцу',type:'БТ',tools:['Claude'],result:'draft',
+   algo:'Шаблон БТ + образцы отчётов РСБУ/МСФО → требования для новых счетов',
+   notes:'Алгоритмы расчёта полей требуют ручной проверки после генерации',
+   iters:1,winner:false,links:[]},
+  {id:3,title:'БТ по BPMN схеме',type:'BPMN',tools:['Claude'],result:'draft',
+   algo:'Загрузить .bpmn файл → запросить описание требований',
+   notes:'Claude читает .bpmn; DeepSeek по фото — завис, ничего не выдал',
+   iters:2,winner:false,links:[]},
+  {id:4,title:'BPMN XML по БТ',type:'BPMN',tools:['Claude','GPT','DeepSeek','Perplexity'],result:'draft',
+   algo:'Полные БТ + тех. требования → BPMN 2.0 XML (Camunda-совместимый, DI, пулы)',
+   notes:'Claude — лучший результат; нужно 2–3 итерации уточнений',
+   iters:3,winner:false,links:[]},
+  {id:5,title:'Mindmap / Brainstorm по теме',type:'Исследование',tools:['Claude','GPT','DeepSeek'],result:'ready',
+   algo:'Ключевые слова → mindmap markdown → Xmind / markmap.js',
+   notes:'DeepSeek хорошо генерит markdown; Claude — для большей глубины',
+   iters:1,winner:false,
+   links:[{label:'Xmind ↗',url:'https://app.xmind.com/q6jCdgjY'},{label:'Markmap REPL ↗',url:'https://markmap.js.org/repl'}]},
+  {id:6,title:'Тест-кейсы по БТ',type:'QA',tools:['Claude'],result:'ready',
+   algo:'Роль QA + БТ + шаблон тест-кейсов → таблица с граничными сценариями',
+   notes:'Давать шаблон формата; затем запросить непокрытые правила из БТ',
+   iters:2,winner:false,links:[]},
+  {id:7,title:'БА-ассистент (прототип)',type:'Инструмент',tools:['GPT','Perplexity'],result:'proto',
+   algo:'OpenAI + Perplexity + bpmn.io + SQL → задеплоен на Railway',
+   notes:'БТ из чата, BPMN онлайн, загрузка docs/pdf/bpmn, история проектов, совместная работа',
+   iters:0,winner:false,
+   links:[{label:'Открыть прототип ↗',url:'https://ba-assistant-production.up.railway.app/'}]},
+  {id:8,title:'Аналитика данных ГИС ГМП',type:'Данные',tools:['Claude','GPT'],result:'ready',
+   algo:'Сырой JSON → итерация 1: взыскатели → итерация 2: по УИН → итерация 3: инкассо',
+   notes:'Начинать с общего вопроса, уточнять формат, финал — сводная таблица',
+   iters:3,winner:false,links:[]},
+  {id:9,title:'«Рыба» БТ по XSD + PDF норматив + маппинг БД',type:'БТ',tools:['Claude','GPT','Perplexity','Gemini'],result:'ready',
+   algo:'Промт с ролью БА + PDF норматива ЦБ + XSD-схема + перечень полей БД → полная «рыба» БТ: глоссарий, User Story, Use Case, маппинг XSD, UAT тест-кейсы, юридические риски (17 разделов)',
+   notes:'Claude 🥇 49/50 — определил тип изменения (доработка vs. новая), полный маппинг XSD. Perplexity 🥈 45/50, GPT 🥉 39/50, Gemini ❌ 16/50. Чем больше МД сервисов — тем выше качество маппинга (~90% автоматически).',
+   iters:1,winner:true,links:[]},
+  {id:10,title:'Сбор открытых вопросов {УТОЧНИТЬ} из БТ',type:'БТ',tools:['Claude','GPT','DeepSeek'],result:'ready',
+   algo:'Загрузить текст БТ с метками {УТОЧНИТЬ} → промт: «Найди все места с меткой {УТОЧНИТЬ} и выведи нумерованным списком» → готовый список открытых вопросов',
+   notes:'Результат — список вопросов для обсуждения с заказчиком. Работает в любом ИИ-сервисе без настройки. Экономия: 15–30 мин на ручной поиск по длинному документу.',
+   iters:1,winner:false,links:[]},
+];
+let nextId=11,editId=null,filterType='',filterResult='';
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function setType(t){filterType=t;document.querySelectorAll('[id^="nav-"]').forEach(e=>e.classList.remove('active'));document.getElementById('nav-'+(t||'all')).classList.add('active');render();}
+function setResult(r){filterResult=r;document.querySelectorAll('[id^="res-"]').forEach(e=>e.classList.remove('active'));document.getElementById('res-'+(r||'all')).classList.add('active');render();}
+
+function filtered(){
+  const tl=document.getElementById('f-tool').value;
+  const q=(document.getElementById('searchInput').value||'').toLowerCase().trim();
+  return cases.filter(c=>(!filterType||c.type===filterType)&&(!filterResult||c.result===filterResult)&&(!tl||c.tools.includes(tl))&&(!q||(c.title+c.algo+c.notes+c.type).toLowerCase().includes(q)));
+}
+
+function render(){
+  const f=filtered();
+  document.getElementById('totalCnt').textContent=cases.length;
+  document.getElementById('caseCnt').textContent=f.length;
+  const ready=f.filter(c=>c.result==='ready').length,draft=f.filter(c=>c.result==='draft').length,ts=new Set(f.flatMap(c=>c.tools));
+  document.getElementById('metrics').innerHTML=`
+    <div class="oz-metric"><div class="oz-metric-label">Кейсов найдено</div><div class="oz-metric-val">${f.length}</div><div class="oz-metric-sub">из ${cases.length} в базе</div></div>
+    <div class="oz-metric"><div class="oz-metric-label">Готово к применению</div><div class="oz-metric-val" style="color:#2E7D32">${ready}</div><span class="oz-metric-chip chip-green">без ручной правки</span></div>
+    <div class="oz-metric"><div class="oz-metric-label">Черновик</div><div class="oz-metric-val" style="color:#E65100">${draft}</div><span class="oz-metric-chip chip-amber">нужна доработка</span></div>
+    <div class="oz-metric"><div class="oz-metric-label">Инструментов</div><div class="oz-metric-val">${ts.size}</div><div class="oz-metric-sub">${[...ts].join(' · ')}</div></div>`;
+
+  if(!f.length){document.getElementById('cards').innerHTML='<div class="oz-empty">Ничего не найдено</div>';return;}
+  document.getElementById('cards').innerHTML=f.map(c=>{
+    const col=TCOLORS[c.type]||TCOLORS.Данные,rm=RM[c.result];
+    const iters=c.iters>0?`${c.iters} ${c.iters===1?'итерация':c.iters<5?'итерации':'итераций'}`:'без итераций';
+    const links=(c.links&&c.links.length)?`<div class="oz-card-links">${c.links.map(l=>`<a class="oz-card-link" href="${esc(l.url)}" target="_blank">${esc(l.label)}</a>`).join('')}</div>`:'';
+    return`<div class="oz-card">
+      <div class="oz-card-top">
+        <div class="oz-card-head">
+          <div class="oz-card-title-row">
+            <div class="oz-card-title">${esc(c.title)}</div>
+            ${c.winner?'<span class="oz-winner-badge">🥇 Лучший по тесту</span>':''}
+          </div>
+          <span class="oz-card-type" style="background:${col.bg};color:${col.tx}">${esc(c.type)}</span>
+        </div>
+        <div class="oz-card-meta">${iters}</div>
+        <div class="oz-card-algo">${esc(c.algo)}</div>
+        <div class="oz-card-notes">${esc(c.notes)}</div>
+        ${links}
+      </div>
+      <div class="oz-card-bottom">
+        <div class="oz-tags">${c.tools.map(t=>`<span class="oz-tag">${esc(t)}</span>`).join('')}</div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span class="oz-result-badge ${rm.cls}">${rm.label}</span>
+          <button class="oz-edit-btn" onclick="openEdit(${c.id})">Изменить</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const tools=['Claude','GPT','DeepSeek','Perplexity','Gemini'],types=[...new Set(cases.map(c=>c.type))];
+  let th=`<tr><th>Тип задачи</th>${tools.map(t=>`<th>${t}</th>`).join('')}</tr>`;
+  types.forEach(tp=>{
+    const rel=cases.filter(c=>c.type===tp);
+    th+=`<tr><td>${tp}</td>${tools.map(t=>{const u=rel.filter(c=>c.tools.includes(t));if(!u.length)return'<td class="cell-no">—</td>';return`<td class="${u.some(c=>c.result==='ready')?'cell-yes':'cell-maybe'}">${u.some(c=>c.result==='ready')?'✓':'⚠'}</td>`;}).join('')}</tr>`;
+  });
+  document.getElementById('matrix').innerHTML=th;
+
+  document.getElementById('conclusions').innerHTML=[
+    {ic:'7',bg:'#E8F5E9',tx:'#2E7D32',t:'7 из 10 кейсов дают готовый результат',b:'БТ по нормативке, Mindmap, Тест-кейсы, Разбор XML, БА-ассистент, XSD-маппинг и сбор вопросов {УТОЧНИТЬ} — без существенной ручной правки.'},
+    {ic:'⚠',bg:'#FFF3E0',tx:'#E65100',t:'2 кейса дают рабочий черновик',b:'BPMN-задачи требуют 2–3 итерации, но экономят 60–70% времени на старт.'},
+    {ic:'!',bg:'#FFE3E3',tx:'#C62828',t:'Нормативка — самый сложный тип данных',b:'ИИ теряет исключения, перекрёстные ссылки и числовые пороги. Без специальных правил промта результат ненадёжен.'},
+    {ic:'C',bg:'#E3F0FF',tx:'#005BFF',t:'Claude — лидер для сложных форматов',b:'Победитель теста XSD-маппинга (49/50). Единственный, кто самостоятельно определяет тип изменения. Лучший для .bpmn и нормативных текстов.'},
+    {ic:'↻',bg:'#EDE9FD',tx:'#5B46D1',t:'Итерационный подход обязателен',b:'Один промт редко даёт финальный результат. Мини-описание → первый результат → уточняющие промты → итоговый промт для переиспользования.'},
+    {ic:'↗',bg:'#FCE4EC',tx:'#C62828',t:'Следующий шаг — библиотека промтов',b:'При добавлении МД сервисов ИИ заполняет маппинг XSD на ~90% автоматически. Шаблон промта по XSD готов к доработке на реальных задачах.'},
+  ].map(c=>`<div class="oz-concl"><div class="oz-concl-ic" style="background:${c.bg};color:${c.tx}">${esc(c.ic)}</div><div class="oz-concl-body"><strong>${esc(c.t)}</strong><p>${esc(c.b)}</p></div></div>`).join('');
+}
+
+function toggleSection(bodyId,iconId){const b=document.getElementById(bodyId),ic=document.getElementById(iconId);const isOpen=ic.classList.contains('open');b.style.maxHeight=isOpen?'0':'3000px';ic.classList.toggle('open',!isOpen);}
+
+function editorHTML(c){
+  const isEdit=!!c;
+  const rOpts=['ready','draft','proto'].map(v=>`<option value="${v}" ${c&&c.result===v?'selected':''}>${RM[v].label}</option>`).join('');
+  const tOpts=['БТ','BPMN','Исследование','QA','Данные','Инструмент'].map(v=>`<option value="${v}" ${c&&c.type===v?'selected':''}>${v}</option>`).join('');
+  const linksVal=c&&c.links?c.links.map(l=>l.label+'::'+l.url).join('\n'):'';
+  return`<div class="oz-editor"><h3>${isEdit?'Редактировать кейс':'Новый кейс'}</h3>
+    <div class="oz-editor-grid">
+      <div class="oz-field span2"><label>Название</label><input id="e-title" value="${esc(c?c.title:'')}"></div>
+      <div class="oz-field"><label>Тип задачи</label><select id="e-type">${tOpts}</select></div>
+      <div class="oz-field"><label>Результат</label><select id="e-result">${rOpts}</select></div>
+      <div class="oz-field span2"><label>Алгоритм / шаги</label><textarea id="e-algo">${esc(c?c.algo:'')}</textarea></div>
+      <div class="oz-field span2"><label>Правила / примечания</label><textarea id="e-notes">${esc(c?c.notes:'')}</textarea></div>
+      <div class="oz-field"><label>Инструменты (через запятую)</label><input id="e-tools" value="${esc(c?c.tools.join(', '):'')}" placeholder="Claude, GPT"></div>
+      <div class="oz-field"><label>Итераций</label><input id="e-iters" type="number" min="0" max="20" value="${c?c.iters:1}"></div>
+      <div class="oz-field span2"><label>Ссылки (Название::URL, по одной на строку)</label><textarea id="e-links" style="min-height:48px">${esc(linksVal)}</textarea></div>
+    </div>
+    <div class="oz-editor-actions">
+      <button class="btn-save" onclick="${isEdit?'saveEdit()':'saveAdd()'}">Сохранить</button>
+      <button class="btn-cancel-e" onclick="closeEditor()">Отмена</button>
+      ${isEdit?`<button class="btn-del" onclick="deleteCase(${c.id})">Удалить</button>`:''}
+    </div></div>`;
+}
+
+function parseLinks(raw){return(raw||'').split('\n').map(s=>s.trim()).filter(Boolean).map(s=>{const p=s.split('::');return p.length>=2?{label:p[0].trim(),url:p.slice(1).join('::').trim()}:null;}).filter(Boolean);}
+function openEdit(id){editId=id;const c=cases.find(x=>x.id===id);const s=document.getElementById('editor-slot');s.innerHTML=editorHTML(c);s.scrollIntoView({behavior:'smooth',block:'nearest'});}
+function openAdd(){editId=null;const s=document.getElementById('editor-slot');s.innerHTML=editorHTML(null);s.scrollIntoView({behavior:'smooth',block:'nearest'});}
+function closeEditor(){document.getElementById('editor-slot').innerHTML='';editId=null;}
+function readForm(){return{title:document.getElementById('e-title').value.trim(),type:document.getElementById('e-type').value,algo:document.getElementById('e-algo').value.trim(),notes:document.getElementById('e-notes').value.trim(),tools:document.getElementById('e-tools').value.split(',').map(s=>s.trim()).filter(Boolean),result:document.getElementById('e-result').value,iters:parseInt(document.getElementById('e-iters').value)||0,links:parseLinks(document.getElementById('e-links').value),winner:false};}
+function saveEdit(){const d=readForm();if(!d.title)return;const i=cases.findIndex(c=>c.id===editId);if(i>=0)cases[i]={...cases[i],...d};closeEditor();render();}
+function saveAdd(){const d=readForm();if(!d.title)return;cases.push({id:nextId++,...d});closeEditor();render();}
+function deleteCase(id){if(!confirm('Удалить кейс?'))return;cases=cases.filter(c=>c.id!==id);closeEditor();render();}
+
+render();
+</script>
+</body>
+</html>

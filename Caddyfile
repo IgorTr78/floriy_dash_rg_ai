@@ -1,0 +1,5 @@
+:{$PORT}
+root * /srv/site
+encode gzip zstd
+try_files {path} {path}/ /index.html
+file_server

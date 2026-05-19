@@ -67,6 +67,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--oz-bg);col
 .oz-card-title-row{display:flex;align-items:flex-start;gap:6px;flex-wrap:wrap;flex:1}
 .oz-card-title{font-size:13px;font-weight:600;line-height:1.35;color:var(--oz-text)}
 .oz-winner-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FFF8E1;color:#F57C00;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.oz-new-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;background:#E8F5E9;color:#2E7D32;white-space:nowrap;flex-shrink:0;margin-top:2px}
 .oz-card-meta{font-size:11px;color:var(--oz-text-3);margin-bottom:8px}
 .oz-card-algo{font-size:12px;color:var(--oz-text-2);line-height:1.6;margin-bottom:8px}
 .oz-card-notes{font-size:11px;color:var(--oz-text-3);line-height:1.5;font-style:italic;border-left:2px solid var(--oz-border);padding-left:8px}
@@ -162,7 +163,7 @@ table.oz-table tr:hover td{background:#F5F8FF}
   <div class="oz-header-actions">
     <button class="oz-badge-btn">
       <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1L8 4.8H12L9 7L10 11L6.5 9L3 11L4 7L1 4.8H5L6.5 1Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" fill="none"/></svg>
-      Промты <span class="oz-cnt" id="totalCnt">12</span>
+      Промты <span class="oz-cnt" id="totalCnt">16</span>
     </button>
     <button class="oz-badge-btn primary" onclick="openAdd()">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -209,11 +210,12 @@ table.oz-table tr:hover td{background:#F5F8FF}
     <div class="oz-toolbar">
       <div class="oz-toolbar-left">
         <span class="oz-section-title">Кейсы</span>
-        <span class="oz-count-badge" id="caseCnt">12</span>
+        <span class="oz-count-badge" id="caseCnt">16</span>
       </div>
       <select class="oz-select" id="f-tool" onchange="render()">
         <option value="">Все инструменты</option>
         <option value="Claude">Claude</option>
+        <option value="ChatGPT">ChatGPT</option>
         <option value="GPT">GPT</option>
         <option value="GPT 5.4">GPT 5.4</option>
         <option value="DeepSeek">DeepSeek</option>
@@ -306,69 +308,89 @@ const RM={
 
 let cases=[
   {id:1,title:'Правка БТ по нормативке',type:'БТ',
-   tools:['DeepSeek (рабочий)'],result:'draft',iters:3,winner:false,links:[],
+   tools:['DeepSeek (рабочий)'],result:'draft',iters:3,winner:false,isNew:false,links:[],
    algo:'Роль БА + текст изменений из 590-П + БТ AS IS → промт 1: список BR → промт 2: структурировать по моему плану',
    notes:'Вставлять текст напрямую, запрещать домысливание, просить цитировать пункты'},
 
   {id:2,title:'БТ нового отчёта по образцу',type:'БТ',
-   tools:['Claude'],result:'draft',iters:1,winner:false,links:[],
+   tools:['Claude'],result:'draft',iters:1,winner:false,isNew:false,links:[],
    algo:'Шаблон БТ + образцы отчётов РСБУ/МСФО → изменённые требования для нового отчёта',
    notes:'Алгоритмы расчёта полей требуют ручной проверки после генерации; по тексту нужны корректировки'},
 
   {id:3,title:'БТ по BPMN схеме',type:'BPMN',
-   tools:['Claude'],result:'draft',iters:2,winner:false,links:[],
+   tools:['Claude'],result:'draft',iters:2,winner:false,isNew:false,links:[],
    algo:'Загрузить .bpmn файл → запросить подробное описание требований для роли БА',
    notes:'Claude читает .bpmn, дал свой очень детальный шаблон бизнес-требований, требуется правка. DeepSeek по фото — завис, ничего не выдал'},
 
   {id:4,title:'BPMN XML по БТ',type:'BPMN',
-   tools:['Claude','GPT','DeepSeek','Perplexity'],result:'draft',iters:1,winner:false,links:[],
-   algo:'Полные БТ + тех. требования → детальный промт для генерации BPMN 2.0 XML (конкретизировать совместимость с Camunda Modeler или BPMN Modeler Enterprise, правила для пулов). Проверки: непрерывность sequence flow; подписи исходящих потоков после gateway; наличие default flow у всех exclusive gateway; корректность event-based gateway; корректность message flow; корректность BPMN DI',
+   tools:['Claude','GPT','DeepSeek','Perplexity'],result:'draft',iters:1,winner:false,isNew:false,links:[],
+   algo:'Полные БТ + тех. требования → детальный промт для генерации BPMN 2.0 XML (Camunda Modeler или BPMN Modeler Enterprise). Проверки: непрерывность sequence flow; подписи исходящих потоков после gateway; наличие default flow; корректность event-based gateway; корректность message flow; корректность BPMN DI',
    notes:'Claude — лучший результат, самая полная схема, требует немного корректировок'},
 
   {id:5,title:'Mindmap / Brainstorm по теме',type:'Исследование',
-   tools:['Claude','GPT','DeepSeek','Xmind','Markmap'],result:'draft',iters:1,winner:false,
+   tools:['Claude','GPT','DeepSeek','Xmind','Markmap'],result:'draft',iters:1,winner:false,isNew:false,
    links:[{label:'Xmind ↗',url:'https://app.xmind.com/q6jCdgjY'},{label:'Markmap REPL ↗',url:'https://markmap.js.org/repl'}],
-   algo:'Ключевые слова по исследуемой теме в любом ИИ → mindmap markdown → загрузить сгенерированный markdown в сервис Xmind / markmap.js → на встрече с Заказчиком использовать как основу для обсуждения верхнеуровневых требований, вносить правки в текст',
+   algo:'Ключевые слова по исследуемой теме в любом ИИ → mindmap markdown → загрузить в Xmind / markmap.js → использовать на встрече с Заказчиком как основу для обсуждения верхнеуровневых требований, вносить правки в текст',
    notes:'Запрос: «Сгенери mindmap в формате markdown». Claude, DeepSeek (рабочий) хорошо генерит описание в формате markdown'},
 
   {id:6,title:'Тест-кейсы по БТ',type:'QA',
-   tools:['DeepSeek'],result:'draft',iters:2,winner:false,links:[],
+   tools:['DeepSeek'],result:'draft',iters:2,winner:false,isNew:false,links:[],
    algo:'Роль QA/БА + БТ + шаблон своих тест-кейсов → таблица с сценариями → докрутить дополнительными вопросами',
    notes:'Давать шаблон формата; затем запросить непокрытые правила из БТ'},
 
   {id:7,title:'БА-ассистент (прототип)',type:'Инструмент',
-   tools:['GPT','Perplexity','OpenAI'],result:'proto',iters:0,winner:false,
+   tools:['GPT','Perplexity','OpenAI'],result:'proto',iters:0,winner:false,isNew:false,
    links:[{label:'Открыть прототип ↗',url:'https://ba-assistant-production.up.railway.app/'}],
    algo:'OpenAI + Perplexity + bpmn.io + SQL → задеплоен на Railway',
-   notes:'Формирует БТ из чата, строит редактируемые BPMN онлайн, загрузка и чтение docs/pdf/bpmn, csv, xlsx, история проектов, совместная работа нескольких БА под своей ролью, ищет best practice. Также обратный процесс, на основе схемы — формирует БТ и прочую документацию'},
+   notes:'Формирует БТ из чата, строит редактируемые BPMN онлайн, загрузка и чтение docs/pdf/bpmn, csv, xlsx, история проектов, совместная работа нескольких БА под своей ролью, ищет best practice. Также обратный процесс — на основе схемы формирует БТ и прочую документацию'},
 
   {id:8,title:'Аналитика данных ГИС ГМП',type:'Данные',
-   tools:['DeepSeek (рабочий)'],result:'ready',iters:3,winner:false,links:[],
-   algo:'Загрузить сырой JSON → промт «анализ сообщения из ГИС ГМП» → итерация 1: «Сколько взыскателей и какие», задать в формате таблицы → итерация 2: группировка полученных данных по УИН с детализацией (с указанием статуса, основанием, датой выставления и суммой остатка платежа), формат — таблица → итерация 3: таблица выставленных инкассо (данные: Получатель, УИН, дату, сумму, статус и основание)',
+   tools:['DeepSeek (рабочий)'],result:'ready',iters:3,winner:false,isNew:false,links:[],
+   algo:'Загрузить сырой JSON → промт «анализ сообщения из ГИС ГМП» → итерация 1: «Сколько взыскателей и какие», задать в формате таблицы → итерация 2: группировка по УИН с детализацией (статус, основание, дата, сумма остатка) → итерация 3: таблица выставленных инкассо (Получатель, УИН, дата, сумма, статус, основание)',
    notes:'Начинать с общего вопроса, уточнять формат, уточнять детализацию группировок и необходимых данных'},
 
   {id:9,title:'«Рыба» БТ по XSD + PDF норматив + маппинг БД',type:'БТ',
-   tools:['Claude','GPT 5.4','Perplexity','Gemini'],result:'ready',iters:1,winner:true,links:[],
-   algo:'Промт с ролью БА + PDF нормативка ЦБ + XSD-схема + перечень полей БД → задана структура шаблона БТ: глоссарий, User Story, Use Case, маппинг XSD, UAT тест-кейсы, юридические риски (17 разделов) + правила заполнения → задан список нормативки для анализа',
-   notes:'Claude 🥇 49/50 — единственный кто определил тип изменения (доработка vs новая), полный маппинг XSD. Perplexity 🥈 45/50: уступает в глубине маппинга XSD и отсутствии явных флажков [ПРОТИВОРЕЧИЕ], но выигрывает по конкретности тест-кейсов (точные значения паттернов из XSD) и охвату User Story (8 штук — максимум). GPT 🥉 39/50: модель написала, что маппинг XSD сделан как «укрупнённый черновик» и предложила вынести полный реестр в Excel. Лучший результат по флажкам противоречий PDF vs XSD. Gemini ❌ 16/50: документ не пригоден для работы. Глоссарий из 5 терминов, один Use Case, 4% охвата XSD-схемы и фактическая ошибка: ReasonCodeInd интерпретирован как «коды ошибок приёма файла» вместо «кодов причин отсутствия TIN». Итог: на 90% заполнит маппинг XML на атрибуты; подсвечивает то, о чём не задумывался — юридических рисков, матрицы трассировки требований, требований к архивированию; отличные полные тест-кейсы'},
+   tools:['Claude','GPT 5.4','Perplexity','Gemini'],result:'ready',iters:1,winner:true,isNew:false,links:[],
+   algo:'Промт с ролью БА + PDF нормативка ЦБ + XSD-схема + перечень полей БД → структура шаблона БТ: глоссарий, User Story, Use Case, маппинг XSD, UAT тест-кейсы, юридические риски (17 разделов) + правила заполнения → задан список нормативки для анализа',
+   notes:'Claude 🥇 49/50 — единственный кто определил тип изменения (доработка vs новая), полный маппинг XSD. Perplexity 🥈 45/50: точные значения паттернов из XSD, 8 User Story. GPT 🥉 39/50: маппинг XSD как «черновик». Gemini ❌ 16/50: документ не пригоден, 4% охвата XSD. Итог: на 90% заполнит маппинг XML; подсвечивает юридические риски, матрицу трассировки и требования к архивированию'},
 
   {id:10,title:'Сбор открытых вопросов {УТОЧНИТЬ} из БТ',type:'БТ',
-   tools:['Claude','GPT','DeepSeek'],result:'ready',iters:1,winner:false,links:[],
+   tools:['Claude','GPT','DeepSeek'],result:'ready',iters:1,winner:false,isNew:false,links:[],
    algo:'Загрузить текст БТ с метками {УТОЧНИТЬ} → промт: «Найди все места с меткой {УТОЧНИТЬ} и выведи нумерованным списком» → готовый список открытых вопросов',
    notes:'Результат — список вопросов для обсуждения с заказчиком. Работает в любом ИИ-сервисе без настройки. Экономия: 15–30 мин на ручной поиск по длинному документу'},
 
   {id:11,title:'Шпаргалка по всей отчётности, регламентированной Форматом',type:'Исследование',
-   tools:['DeepSeek (рабочий)'],result:'ready',iters:1,winner:false,links:[],
+   tools:['DeepSeek (рабочий)'],result:'ready',iters:1,winner:false,isNew:false,links:[],
    algo:'Загрузка документа ПФР "Форматы" + промт: собрать информацию по отчётам',
    notes:'Структурированный ответ сгруппированный по видам отчётности в формате таблицы: № Наименование отчёта / документа; Кто формирует?; Краткое описание; Код документа в XML. Подсвечены особо важные отчёты, которые банку требуется автоматизировать'},
 
   {id:12,title:'Создать xml-документ на основании документа Форматы с кодом SPIS/BRAS',type:'Данные',
-   tools:['DeepSeek (рабочий)'],result:'ready',iters:1,winner:false,links:[],
+   tools:['DeepSeek (рабочий)'],result:'ready',iters:1,winner:false,isNew:false,links:[],
    algo:'Промт «создать xml-документ на основании документа Форматы с кодом SPIS» → промт «описать значение каждого поля xml, которое указано выше» → проверка промт «какие поля остались не заполненными по данному документу и по какой причине»',
    notes:'Результат: полностью заполненный xml-документ с описанием полей и указанием незаполненных полей с причиной'},
+
+  {id:13,title:'Анализ требований + генерация тест-кейсов и артефактов',type:'БТ',
+   tools:['DeepSeek (рабочий)','ChatGPT'],result:'draft',iters:1,winner:false,isNew:true,links:[],
+   algo:'Сгенерировать промт в более умном ИИ (Claude/ChatGPT) → отправить промт в DeepSeek рабочий → изучить недочёты, выявленные ИИ, при необходимости исправить → прислать новую версию требований. Опционально: попросить тест-кейсы в необходимом формате (указать нужные столбцы)',
+   notes:'Промт роли: Senior BA/Product Analyst по BABOK, IEEE 29148, Agile, BDD, UML, BPMN. Анализирует: полноту, однозначность, непротиворечивость, реализуемость, тестируемость, атомарность, трассируемость. Генерирует: User Stories, Use Cases, Test Cases, User Flow, BPMN-описание. Написание TC и UC занимает в 2–3 раза меньше времени. Генерация + валидация — 5–10 минут вместо >1 часа'},
+
+  {id:14,title:'Анализ внешней документации для драфта БТ',type:'Исследование',
+   tools:['DeepSeek (рабочий)','ChatGPT'],result:'ready',iters:1,winner:false,isNew:true,links:[],
+   algo:'Сгенерить промт в более умной модели → отправить промт в ИИ, подгрузить необходимые документы для анализа → изучить подготовленный драфт → опционально: попросить подогнать под шаблон БТ',
+   notes:'Промт-правило: каждое требование содержит ссылку на источник из входных данных. Запрещено выдумывать информацию. При нехватке данных — список уточняющих вопросов. Формирует BRD: Business Context, стейкхолдеры, scope, BR, Business Rules, ограничения, допущения, риски. Эффект: экономит несколько часов — документация на 180 страниц разобрана за 20 минут'},
+
+  {id:15,title:'Поиск информации и нормативных документов',type:'Исследование',
+   tools:['ChatGPT','DeepSeek'],result:'ready',iters:1,winner:false,isNew:true,links:[],
+   algo:'Описать контекст — что, зачем и для чего нужна информация. Подсказать направление (документы ЦБ, УФЭБС и т.п.). Указать использовать только актуальную информацию на 2026 год. Просить выдавать в формате информации + ссылки на источники (с указанием откуда именно из документа взята информация)',
+   notes:'Поиск информации в разы быстрее — от кейса к кейсу, точных цифр по эффекту дать невозможно. ChatGPT сильнее DeepSeek в поиске и актуальности информации'},
+
+  {id:16,title:'Отрисовка экранных форм (прототипов) в HTML',type:'БТ',
+   tools:['ChatGPT'],result:'ready',iters:1,winner:false,isNew:true,links:[],
+   algo:'Загрузить в ИИ описание процесса (можно полностью залить БТ) → попросить сформировать рабочий прототип в формате HTML → подсказать какие данные могут быть заполнены (если в БТ нет)',
+   notes:'Результат: готовый HTML-прототип для приёмки и обсуждения с заказчиком и разработкой. Без ИИ нужны навыки HTML/CSS и много времени ИЛИ Figma на уровне отрисовки прототипов — от нескольких дней до недели. С ИИ — 5–10 минут'},
 ];
 
-let nextId=13,editId=null,filterType='',filterResult='';
+let nextId=17,editId=null,filterType='',filterResult='';
 
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function setType(t){filterType=t;document.querySelectorAll('[id^="nav-"]').forEach(e=>e.classList.remove('active'));document.getElementById('nav-'+(t||'all')).classList.add('active');render();}
@@ -391,6 +413,7 @@ function render(){
   document.getElementById('caseCnt').textContent=f.length;
   const ready=f.filter(c=>c.result==='ready').length,draft=f.filter(c=>c.result==='draft').length;
   const ts=new Set(f.flatMap(c=>c.tools));
+
   document.getElementById('metrics').innerHTML=`
     <div class="oz-metric"><div class="oz-metric-label">Кейсов найдено</div><div class="oz-metric-val">${f.length}</div><div class="oz-metric-sub">из ${cases.length} в базе</div></div>
     <div class="oz-metric"><div class="oz-metric-label">Готово к применению</div><div class="oz-metric-val" style="color:#2E7D32">${ready}</div><span class="oz-metric-chip chip-green">без ручной правки</span></div>
@@ -398,16 +421,21 @@ function render(){
     <div class="oz-metric"><div class="oz-metric-label">Инструментов</div><div class="oz-metric-val">${ts.size}</div><div class="oz-metric-sub">${[...ts].slice(0,4).join(' · ')}${ts.size>4?'…':''}</div></div>`;
 
   if(!f.length){document.getElementById('cards').innerHTML='<div class="oz-empty">Ничего не найдено по вашему запросу</div>';return;}
+
   document.getElementById('cards').innerHTML=f.map(c=>{
     const col=TCOLORS[c.type]||TCOLORS.Данные,rm=RM[c.result];
     const iters=c.iters>0?`${c.iters} ${c.iters===1?'итерация':c.iters<5?'итерации':'итераций'}`:'без итераций';
     const links=(c.links&&c.links.length)?`<div class="oz-card-links">${c.links.map(l=>`<a class="oz-card-link" href="${esc(l.url)}" target="_blank">${esc(l.label)}</a>`).join('')}</div>`:'';
+    const badges=[
+      c.winner?'<span class="oz-winner-badge">🥇 Лучший по тесту</span>':'',
+      c.isNew?'<span class="oz-new-badge">✦ Новый</span>':'',
+    ].filter(Boolean).join('');
     return`<div class="oz-card">
       <div class="oz-card-top">
         <div class="oz-card-head">
           <div class="oz-card-title-row">
             <div class="oz-card-title">${esc(c.title)}</div>
-            ${c.winner?'<span class="oz-winner-badge">🥇 Лучший по тесту</span>':''}
+            ${badges}
           </div>
           <span class="oz-card-type" style="background:${col.bg};color:${col.tx}">${esc(c.type)}</span>
         </div>
@@ -426,27 +454,31 @@ function render(){
     </div>`;
   }).join('');
 
-  const tools=['Claude','GPT','DeepSeek','Perplexity','Gemini'],types=[...new Set(cases.map(c=>c.type))];
+  const tools=['Claude','ChatGPT','DeepSeek','Perplexity','Gemini'];
+  const types=[...new Set(cases.map(c=>c.type))];
   let th=`<tr><th>Тип задачи</th>${tools.map(t=>`<th>${t}</th>`).join('')}</tr>`;
   types.forEach(tp=>{
     const rel=cases.filter(c=>c.type===tp);
     th+=`<tr><td>${tp}</td>${tools.map(t=>{
-      const toolsFlat=rel.flatMap(c=>c.tools);
-      const hasVariant=t==='DeepSeek'?toolsFlat.some(x=>x==='DeepSeek'||x==='DeepSeek (рабочий)'):toolsFlat.includes(t);
-      if(!hasVariant)return'<td class="cell-no">—</td>';
-      const u=rel.filter(c=>c.tools.some(x=>t==='DeepSeek'?(x==='DeepSeek'||x==='DeepSeek (рабочий)'):x===t));
+      const match=c=>c.tools.some(x=>{
+        if(t==='DeepSeek') return x==='DeepSeek'||x==='DeepSeek (рабочий)';
+        if(t==='ChatGPT') return x==='ChatGPT'||x==='GPT'||x==='GPT 5.4';
+        return x===t;
+      });
+      const u=rel.filter(match);
+      if(!u.length)return'<td class="cell-no">—</td>';
       return`<td class="${u.some(c=>c.result==='ready')?'cell-yes':'cell-maybe'}">${u.some(c=>c.result==='ready')?'✓':'⚠'}</td>`;
     }).join('')}</tr>`;
   });
   document.getElementById('matrix').innerHTML=th;
 
   document.getElementById('conclusions').innerHTML=[
-    {ic:'5',bg:'#E8F5E9',tx:'#2E7D32',t:'5 из 12 кейсов дают готовый результат',b:'Разбор XML ГИС ГМП, XSD-маппинг, сбор вопросов {УТОЧНИТЬ}, Шпаргалка по Форматам и SPIS/BRAS xml — без существенной ручной правки.'},
-    {ic:'6',bg:'#FFF3E0',tx:'#E65100',t:'6 кейсов дают рабочий черновик',b:'БТ по нормативке, отчёты, BPMN-задачи, Mindmap, тест-кейсы требуют доработки, но экономят 60–70% времени на старт.'},
+    {ic:'9',bg:'#E8F5E9',tx:'#2E7D32',t:'9 из 16 кейсов дают готовый результат',b:'Разбор XML, XSD-маппинг, вопросы {УТОЧНИТЬ}, Шпаргалка по Форматам, SPIS/BRAS xml, анализ документации, поиск нормативки, отрисовка прототипов — без существенной правки.'},
+    {ic:'7',bg:'#FFF3E0',tx:'#E65100',t:'7 кейсов дают рабочий черновик',b:'БТ по нормативке, отчёты, BPMN-задачи, Mindmap, тест-кейсы, анализ требований — требуют доработки, но экономят 60–70% времени на старт.'},
     {ic:'!',bg:'#FFE3E3',tx:'#C62828',t:'Нормативка — самый сложный тип данных',b:'ИИ теряет исключения, перекрёстные ссылки и числовые пороги. Без специальных правил промта результат ненадёжен.'},
-    {ic:'C',bg:'#E3F0FF',tx:'#005BFF',t:'Claude — лидер для сложных форматов',b:'Победитель теста XSD-маппинга (49/50). Единственный, кто самостоятельно определяет тип изменения. Лучший для .bpmn и нормативных текстов.'},
-    {ic:'↻',bg:'#EDE9FD',tx:'#5B46D1',t:'Итерационный подход обязателен',b:'Мини-описание → первый результат → уточняющие промты → итоговый промт для переиспользования.'},
-    {ic:'↗',bg:'#FCE4EC',tx:'#C62828',t:'Следующий шаг — библиотека промтов',b:'При добавлении МД сервисов ИИ заполняет маппинг XSD на ~90% автоматически. Шаблон промта по XSD готов к доработке на реальных задачах.'},
+    {ic:'C',bg:'#E3F0FF',tx:'#005BFF',t:'Claude — лидер для сложных форматов. ChatGPT — для поиска и прототипов',b:'Claude побеждает в XSD-маппинге (49/50) и работе с .bpmn. ChatGPT сильнее в поиске актуальной информации и генерации HTML-прототипов.'},
+    {ic:'↻',bg:'#EDE9FD',tx:'#5B46D1',t:'Итерационный подход обязателен',b:'Генерируй промт в умной модели → отправляй в рабочую → уточняй → переиспользуй итоговый промт.'},
+    {ic:'↗',bg:'#FCE4EC',tx:'#C62828',t:'Экономия времени — от минут до дней',b:'180 страниц документации — 20 минут с ИИ. HTML-прототип — 5–10 минут вместо нескольких дней. TC и UC — в 2–3 раза быстрее. Следующий шаг — библиотека промтов.'},
   ].map(c=>`<div class="oz-concl"><div class="oz-concl-ic" style="background:${c.bg};color:${c.tx}">${esc(c.ic)}</div><div class="oz-concl-body"><strong>${esc(c.t)}</strong><p>${esc(c.b)}</p></div></div>`).join('');
 }
 
@@ -464,7 +496,7 @@ function editorHTML(c){
       <div class="oz-field"><label>Результат</label><select id="e-result">${rOpts}</select></div>
       <div class="oz-field span2"><label>Алгоритм / шаги</label><textarea id="e-algo">${esc(c?c.algo:'')}</textarea></div>
       <div class="oz-field span2"><label>Правила / примечания</label><textarea id="e-notes">${esc(c?c.notes:'')}</textarea></div>
-      <div class="oz-field"><label>Инструменты (через запятую)</label><input id="e-tools" value="${esc(c?c.tools.join(', '):'')}" placeholder="Claude, GPT"></div>
+      <div class="oz-field"><label>Инструменты (через запятую)</label><input id="e-tools" value="${esc(c?c.tools.join(', '):'')}" placeholder="Claude, ChatGPT"></div>
       <div class="oz-field"><label>Итераций</label><input id="e-iters" type="number" min="0" max="20" value="${c?c.iters:1}"></div>
       <div class="oz-field span2"><label>Ссылки (Название::URL, по одной на строку)</label><textarea id="e-links" style="min-height:44px">${esc(linksVal)}</textarea></div>
     </div>
@@ -479,7 +511,7 @@ function parseLinks(raw){return(raw||'').split('\n').map(s=>s.trim()).filter(Boo
 function openEdit(id){editId=id;const c=cases.find(x=>x.id===id);const s=document.getElementById('editor-slot');s.innerHTML=editorHTML(c);s.scrollIntoView({behavior:'smooth',block:'nearest'});}
 function openAdd(){editId=null;const s=document.getElementById('editor-slot');s.innerHTML=editorHTML(null);s.scrollIntoView({behavior:'smooth',block:'nearest'});}
 function closeEditor(){document.getElementById('editor-slot').innerHTML='';editId=null;}
-function readForm(){return{title:document.getElementById('e-title').value.trim(),type:document.getElementById('e-type').value,algo:document.getElementById('e-algo').value.trim(),notes:document.getElementById('e-notes').value.trim(),tools:document.getElementById('e-tools').value.split(',').map(s=>s.trim()).filter(Boolean),result:document.getElementById('e-result').value,iters:parseInt(document.getElementById('e-iters').value)||0,links:parseLinks(document.getElementById('e-links').value),winner:false};}
+function readForm(){return{title:document.getElementById('e-title').value.trim(),type:document.getElementById('e-type').value,algo:document.getElementById('e-algo').value.trim(),notes:document.getElementById('e-notes').value.trim(),tools:document.getElementById('e-tools').value.split(',').map(s=>s.trim()).filter(Boolean),result:document.getElementById('e-result').value,iters:parseInt(document.getElementById('e-iters').value)||0,links:parseLinks(document.getElementById('e-links').value),winner:false,isNew:false};}
 function saveEdit(){const d=readForm();if(!d.title)return;const i=cases.findIndex(c=>c.id===editId);if(i>=0)cases[i]={...cases[i],...d};closeEditor();render();}
 function saveAdd(){const d=readForm();if(!d.title)return;cases.push({id:nextId++,...d});closeEditor();render();}
 function deleteCase(id){if(!confirm('Удалить кейс?'))return;cases=cases.filter(c=>c.id!==id);closeEditor();render();}

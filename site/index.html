@@ -68,6 +68,10 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--oz-bg);col
 .oz-card-title{font-size:13px;font-weight:600;line-height:1.35;color:var(--oz-text)}
 .oz-winner-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FFF8E1;color:#F57C00;white-space:nowrap;flex-shrink:0;margin-top:2px}
 .oz-new-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;background:#E8F5E9;color:#2E7D32;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.oz-plan-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FFF3CD;color:#D4860A;white-space:nowrap;flex-shrink:0;margin-top:2px;border:1px dashed #FFB74D}
+.oz-card.is-plan{border:2px dashed #FFB74D!important;background:linear-gradient(135deg,#FFFDE7 0%,#FFF8E1 100%)}
+.oz-card.is-plan .oz-card-bottom{background:#FFF3E0}
+.rb-plan{background:#FFF3CD;color:#D4860A;border:1px dashed #FFB74D}
 .oz-card-meta{font-size:11px;color:var(--oz-text-3);margin-bottom:8px}
 .oz-card-algo{font-size:12px;color:var(--oz-text-2);line-height:1.6;margin-bottom:8px}
 .oz-card-notes{font-size:11px;color:var(--oz-text-3);line-height:1.5;font-style:italic;border-left:2px solid var(--oz-border);padding-left:8px}
@@ -135,6 +139,14 @@ table.oz-table tr:hover td{background:#F5F8FF}
 .chevron.open{transform:rotate(180deg)}
 .collapsible{overflow:hidden;transition:max-height .3s ease}
 .oz-empty{grid-column:1/-1;text-align:center;padding:48px 20px;color:var(--oz-text-3);font-size:13px;background:var(--oz-white);border-radius:var(--oz-radius);box-shadow:var(--oz-shadow)}
+.rb-plan{background:#FFF3CD;color:#B45309;border:1px solid #FFD97D}
+.oz-card.is-plan{border:2px dashed #FFB300;background:linear-gradient(135deg,#FFFDF5 0%,#FFF8E1 100%)}
+.oz-card.is-plan:hover{box-shadow:0 4px 16px rgba(255,179,0,.25)}
+.oz-card.is-plan .oz-card-bottom{background:#FFF8E1}
+.oz-plan-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FFF3CD;color:#B45309;border:1px solid #FFD97D;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.oz-plan-banner{grid-column:1/-1;background:linear-gradient(90deg,#FFFBEB,#FFF3CD);border:1.5px dashed #FFB300;border-radius:var(--oz-radius);padding:12px 16px;display:flex;align-items:flex-start;gap:10px}
+.oz-plan-banner-text strong{color:#92400E;font-size:12px;font-weight:700;display:block;margin-bottom:3px}
+.oz-plan-banner-text span{font-size:12px;color:#78350F;line-height:1.55}
 @media(max-width:900px){.oz-sidebar{display:none}.oz-metrics{grid-template-columns:repeat(2,1fr)}.oz-grid{grid-template-columns:1fr}.oz-rules-grid{grid-template-columns:1fr}.oz-editor-grid{grid-template-columns:1fr}.oz-field.span2{grid-column:1}}
 @media(max-width:600px){.oz-metrics{grid-template-columns:1fr 1fr}.oz-header-title{display:none}}
 </style>
@@ -163,7 +175,7 @@ table.oz-table tr:hover td{background:#F5F8FF}
   <div class="oz-header-actions">
     <button class="oz-badge-btn">
       <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1L8 4.8H12L9 7L10 11L6.5 9L3 11L4 7L1 4.8H5L6.5 1Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" fill="none"/></svg>
-      Промты <span class="oz-cnt" id="totalCnt">16</span>
+      Промты <span class="oz-cnt" id="totalCnt">20</span>
     </button>
     <button class="oz-badge-btn primary" onclick="openAdd()">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -188,6 +200,8 @@ table.oz-table tr:hover td{background:#F5F8FF}
     <div class="oz-nav-item" onclick="setResult('ready')" id="res-ready"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="#2E7D32"/></svg>&nbsp;Готово ✓</div>
     <div class="oz-nav-item" onclick="setResult('draft')" id="res-draft"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="#E65100"/></svg>&nbsp;Черновик ⚠</div>
     <div class="oz-nav-item" onclick="setResult('proto')" id="res-proto"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="#005BFF"/></svg>&nbsp;Прототип</div>
+    <div class="oz-nav-item" onclick="setResult('plan')" id="res-plan"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="#F59E0B"/></svg>&nbsp;В плане ⚙</div>
+    <div class="oz-nav-item" onclick="setResult('plan')" id="res-plan"><svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="#F57C00"/></svg>&nbsp;В плане ⚙</div>
     <div class="oz-nav-divider"></div>
     <div class="oz-nav-label">Быстрые ссылки</div>
     <a class="oz-nav-link" href="https://ba-assistant-production.up.railway.app/" target="_blank">
@@ -210,7 +224,7 @@ table.oz-table tr:hover td{background:#F5F8FF}
     <div class="oz-toolbar">
       <div class="oz-toolbar-left">
         <span class="oz-section-title">Кейсы</span>
-        <span class="oz-count-badge" id="caseCnt">16</span>
+        <span class="oz-count-badge" id="caseCnt">20</span>
       </div>
       <select class="oz-select" id="f-tool" onchange="render()">
         <option value="">Все инструменты</option>
@@ -304,7 +318,9 @@ const RM={
   ready:{label:'✓ Готово',cls:'rb-ready'},
   draft:{label:'⚠ Черновик',cls:'rb-draft'},
   proto:{label:'● Прототип',cls:'rb-proto'},
+  plan:{label:'⚙ В плане',cls:'rb-plan'},
 };
+
 
 let cases=[
   {id:1,title:'Правка БТ по нормативке',type:'БТ',
@@ -388,9 +404,29 @@ let cases=[
    tools:['ChatGPT'],result:'ready',iters:1,winner:false,isNew:true,links:[],
    algo:'Загрузить в ИИ описание процесса (можно полностью залить БТ) → попросить сформировать рабочий прототип в формате HTML → подсказать какие данные могут быть заполнены (если в БТ нет)',
    notes:'Результат: готовый HTML-прототип для приёмки и обсуждения с заказчиком и разработкой. Без ИИ нужны навыки HTML/CSS и много времени ИЛИ Figma на уровне отрисовки прототипов — от нескольких дней до недели. С ИИ — 5–10 минут'},
+
+  {id:17,title:'Дашборд-файл по документам, теме или описанию',type:'Инструмент',
+   tools:['Claude','ChatGPT'],result:'ready',iters:1,winner:false,isNew:true,links:[],
+   algo:'Описать тему + прикрепить разрозненные файлы → промт: «Проанализируй документы, вычлени главное, сформируй в формате HTML» → получить готовый HTML-файл → при необходимости дополнить через текущий чат и перегенерировать новый HTML',
+   notes:'✓ Готов к использованию без редактирования. Минус: каждому пользователю нужно скачать файл для просмотра — нет публичной ссылки'},
+
+  {id:18,title:'Сайт-дашборд с размещением на GitHub + Railway',type:'Инструмент',
+   tools:['Claude'],result:'ready',iters:2,winner:false,isNew:true,links:[],
+   algo:'Описать тему / загрузить файлы / провести опрос → промт: «Проанализируй, вычлени главное, сформируй в формате HTML» → получить index.html → разместить на GitHub (репозиторий) → Railway автоматически деплоит по подключённому репозиторию → при необходимости подключить базу данных (например, Railway PostgreSQL) → тогда любой пользователь сможет дополнять дашборд через интерфейс без перегенерации файла',
+   notes:'✓ Готов к использованию без редактирования. Плюс: просмотр по публичной ссылке без скачивания. С базой данных — дашборд становится живым: пользователи дополняют данные через форму, изменения видны всем в реальном времени'},
+
+  {id:19,title:'Выявление несогласованности законодательства',type:'Исследование',
+   tools:['Claude','ChatGPT'],result:'plan',iters:0,winner:false,isNew:false,links:[],
+   algo:'Загрузить несколько нормативных документов → запросить анализ на противоречия, пробелы и несогласованности между актами → получить структурированный отчёт с указанием конкретных пунктов',
+   notes:'⚙ В проработке. Гипотеза: ИИ способен выявить коллизии между нормативными актами, которые аналитик пропускает при ручном чтении. Требует тестирования на реальных кейсах'},
+
+  {id:20,title:'Генерация типовых требований',type:'БТ',
+   tools:['Claude','ChatGPT'],result:'plan',iters:0,winner:false,isNew:false,links:[],
+   algo:'Описать тип системы или процесса (например: "интеграция с СМЭВ", "личный кабинет клиента") → запросить типовой набор бизнес-требований по шаблону → адаптировать под конкретный проект',
+   notes:'⚙ В проработке. Гипотеза: для повторяющихся классов систем ИИ может генерировать 70–80% стандартных требований автоматически, оставляя аналитику только специфику проекта'},
 ];
 
-let nextId=17,editId=null,filterType='',filterResult='';
+let nextId=21,editId=null,filterType='',filterResult='';
 
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function setType(t){filterType=t;document.querySelectorAll('[id^="nav-"]').forEach(e=>e.classList.remove('active'));document.getElementById('nav-'+(t||'all')).classList.add('active');render();}
@@ -412,25 +448,36 @@ function render(){
   document.getElementById('totalCnt').textContent=cases.length;
   document.getElementById('caseCnt').textContent=f.length;
   const ready=f.filter(c=>c.result==='ready').length,draft=f.filter(c=>c.result==='draft').length;
+  const plan=f.filter(c=>c.result==='plan').length;
   const ts=new Set(f.flatMap(c=>c.tools));
 
   document.getElementById('metrics').innerHTML=`
     <div class="oz-metric"><div class="oz-metric-label">Кейсов найдено</div><div class="oz-metric-val">${f.length}</div><div class="oz-metric-sub">из ${cases.length} в базе</div></div>
     <div class="oz-metric"><div class="oz-metric-label">Готово к применению</div><div class="oz-metric-val" style="color:#2E7D32">${ready}</div><span class="oz-metric-chip chip-green">без ручной правки</span></div>
     <div class="oz-metric"><div class="oz-metric-label">Черновик</div><div class="oz-metric-val" style="color:#E65100">${draft}</div><span class="oz-metric-chip chip-amber">нужна доработка</span></div>
-    <div class="oz-metric"><div class="oz-metric-label">Инструментов</div><div class="oz-metric-val">${ts.size}</div><div class="oz-metric-sub">${[...ts].slice(0,4).join(' · ')}${ts.size>4?'…':''}</div></div>`;
+    <div class="oz-metric"><div class="oz-metric-label">В плане</div><div class="oz-metric-val" style="color:#D4860A">${plan}</div><div class="oz-metric-sub">будущие кейсы</div></div>`;
 
   if(!f.length){document.getElementById('cards').innerHTML='<div class="oz-empty">Ничего не найдено по вашему запросу</div>';return;}
 
-  document.getElementById('cards').innerHTML=f.map(c=>{
+  const planBanner=f.some(c=>c.result==='plan')?`<div class="oz-plan-banner" style="grid-column:1/-1">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8.5" stroke="#F59E0B" stroke-width="1.5"/><path d="M10 6v5M10 13v1" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <div class="oz-plan-banner-text"><strong>⚙ Будущие планы — в проработке</strong><span>Кейсы ниже выделены пунктирной рамкой. Это гипотезы, которые ещё не тестировались на реальных задачах. Результаты и алгоритмы будут уточняться по мере проверки.</span></div>
+  </div>`:'';
+
+  const regularCards=f.filter(c=>c.result!=='plan');
+  const planCards=f.filter(c=>c.result==='plan');
+
+  const renderCard=c=>{
     const col=TCOLORS[c.type]||TCOLORS.Данные,rm=RM[c.result];
     const iters=c.iters>0?`${c.iters} ${c.iters===1?'итерация':c.iters<5?'итерации':'итераций'}`:'без итераций';
     const links=(c.links&&c.links.length)?`<div class="oz-card-links">${c.links.map(l=>`<a class="oz-card-link" href="${esc(l.url)}" target="_blank">${esc(l.label)}</a>`).join('')}</div>`:'';
+    const isPlan=c.result==='plan';
     const badges=[
       c.winner?'<span class="oz-winner-badge">🥇 Лучший по тесту</span>':'',
       c.isNew?'<span class="oz-new-badge">✦ Новый</span>':'',
+      isPlan?'<span class="oz-plan-badge">⚙ В плане</span>':'',
     ].filter(Boolean).join('');
-    return`<div class="oz-card">
+    return`<div class="oz-card${isPlan?' is-plan':''}">
       <div class="oz-card-top">
         <div class="oz-card-head">
           <div class="oz-card-title-row">
@@ -439,20 +486,25 @@ function render(){
           </div>
           <span class="oz-card-type" style="background:${col.bg};color:${col.tx}">${esc(c.type)}</span>
         </div>
-        <div class="oz-card-meta">${iters}</div>
+        ${isPlan?'':` <div class="oz-card-meta">${iters}</div>`}
         <div class="oz-card-algo">${esc(c.algo)}</div>
         <div class="oz-card-notes">${esc(c.notes)}</div>
         ${links}
       </div>
       <div class="oz-card-bottom">
-        <div class="oz-tags">${c.tools.map(t=>`<span class="oz-tag">${esc(t)}</span>`).join('')}</div>
+        <div class="oz-tags">${isPlan?'':c.tools.map(t=>`<span class="oz-tag">${esc(t)}</span>`).join('')}</div>
         <div style="display:flex;align-items:center;gap:6px">
           <span class="oz-result-badge ${rm.cls}">${rm.label}</span>
           <button class="oz-edit-btn" onclick="openEdit(${c.id})">Изменить</button>
         </div>
       </div>
     </div>`;
-  }).join('');
+  };
+
+  document.getElementById('cards').innerHTML=
+    regularCards.map(renderCard).join('')+
+    planBanner+
+    planCards.map(renderCard).join('');
 
   const tools=['Claude','ChatGPT','DeepSeek','Perplexity','Gemini'];
   const types=[...new Set(cases.map(c=>c.type))];
@@ -473,12 +525,12 @@ function render(){
   document.getElementById('matrix').innerHTML=th;
 
   document.getElementById('conclusions').innerHTML=[
-    {ic:'9',bg:'#E8F5E9',tx:'#2E7D32',t:'9 из 16 кейсов дают готовый результат',b:'Разбор XML, XSD-маппинг, вопросы {УТОЧНИТЬ}, Шпаргалка по Форматам, SPIS/BRAS xml, анализ документации, поиск нормативки, отрисовка прототипов — без существенной правки.'},
+    {ic:'9',bg:'#E8F5E9',tx:'#2E7D32',t:'9 из 18 рабочих кейсов дают готовый результат',b:'Разбор XML, XSD-маппинг, вопросы {УТОЧНИТЬ}, Шпаргалка, SPIS/BRAS xml, анализ документации, поиск нормативки, прототипы HTML, дашборды и сайты — без существенной правки.'},
     {ic:'7',bg:'#FFF3E0',tx:'#E65100',t:'7 кейсов дают рабочий черновик',b:'БТ по нормативке, отчёты, BPMN-задачи, Mindmap, тест-кейсы, анализ требований — требуют доработки, но экономят 60–70% времени на старт.'},
+    {ic:'⚙',bg:'#FFF8E1',tx:'#D4860A',t:'2 кейса — будущие планы для проработки',b:'Выявление несогласованности законодательства и генерация типовых требований — гипотезы требуют тестирования на реальных задачах.'},
     {ic:'!',bg:'#FFE3E3',tx:'#C62828',t:'Нормативка — самый сложный тип данных',b:'ИИ теряет исключения, перекрёстные ссылки и числовые пороги. Без специальных правил промта результат ненадёжен.'},
-    {ic:'C',bg:'#E3F0FF',tx:'#005BFF',t:'Claude — лидер для сложных форматов. ChatGPT — для поиска и прототипов',b:'Claude побеждает в XSD-маппинге (49/50) и работе с .bpmn. ChatGPT сильнее в поиске актуальной информации и генерации HTML-прототипов.'},
-    {ic:'↻',bg:'#EDE9FD',tx:'#5B46D1',t:'Итерационный подход обязателен',b:'Генерируй промт в умной модели → отправляй в рабочую → уточняй → переиспользуй итоговый промт.'},
-    {ic:'↗',bg:'#FCE4EC',tx:'#C62828',t:'Экономия времени — от минут до дней',b:'180 страниц документации — 20 минут с ИИ. HTML-прототип — 5–10 минут вместо нескольких дней. TC и UC — в 2–3 раза быстрее. Следующий шаг — библиотека промтов.'},
+    {ic:'C',bg:'#E3F0FF',tx:'#005BFF',t:'Claude — лидер для сложных форматов. ChatGPT — для поиска и прототипов',b:'Claude побеждает в XSD-маппинге (49/50) и работе с .bpmn. ChatGPT сильнее в поиске актуальной информации и генерации HTML-прототипов и дашбордов.'},
+    {ic:'↗',bg:'#FCE4EC',tx:'#C62828',t:'Экономия времени — от минут до дней',b:'180 страниц документации — 20 минут с ИИ. HTML-прототип — 5–10 минут вместо нескольких дней. Сайт-дашборд на Railway — деплой за 15 минут. Следующий шаг — библиотека промтов.'},
   ].map(c=>`<div class="oz-concl"><div class="oz-concl-ic" style="background:${c.bg};color:${c.tx}">${esc(c.ic)}</div><div class="oz-concl-body"><strong>${esc(c.t)}</strong><p>${esc(c.b)}</p></div></div>`).join('');
 }
 
@@ -486,7 +538,7 @@ function toggleSection(bodyId,iconId){const b=document.getElementById(bodyId),ic
 
 function editorHTML(c){
   const isEdit=!!c;
-  const rOpts=['ready','draft','proto'].map(v=>`<option value="${v}" ${c&&c.result===v?'selected':''}>${RM[v].label}</option>`).join('');
+  const rOpts=['ready','draft','proto','plan'].map(v=>`<option value="${v}" ${c&&c.result===v?'selected':''}>${RM[v].label}</option>`).join('');
   const tOpts=['БТ','BPMN','Исследование','QA','Данные','Инструмент'].map(v=>`<option value="${v}" ${c&&c.type===v?'selected':''}>${v}</option>`).join('');
   const linksVal=c&&c.links?c.links.map(l=>l.label+'::'+l.url).join('\n'):'';
   return`<div class="oz-editor"><h3>${isEdit?'Редактировать кейс':'Новый кейс'}</h3>
